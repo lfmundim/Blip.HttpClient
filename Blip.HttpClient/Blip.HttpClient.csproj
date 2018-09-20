@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Lucas Mundim, Andre Minelli</Authors>
+    <Company>Take</Company>
+    <Description>Take.BLiP.Client implementation to use Http calls instead of instantiating an actual client</Description>
+    <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
+    <PackageTags>blip, client, http, chatbot, take</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lime.Messaging" Version="0.8.53-beta" />
+    <PackageReference Include="Lime.Protocol" Version="0.8.53-beta" />
+    <PackageReference Include="Lime.Protocol.Serialization" Version="0.7.278" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="RestEase" Version="1.4.7" />
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="Take.Blip.Client" Version="0.5.176-beta" />
+    <PackageReference Include="Takenet.Iris.Messaging" Version="2.57.525" />
+  </ItemGroup>
+
+</Project>
