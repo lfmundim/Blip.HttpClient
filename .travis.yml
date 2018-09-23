@@ -3,3 +3,6 @@ mono: none
 dotnet: 2.1
 script: 
   - dotnet build Blip.HttpClient.sln
+  - dotnet test Blip.HttpClient.Tests/Blip.HttpClient.Tests.csproj
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
