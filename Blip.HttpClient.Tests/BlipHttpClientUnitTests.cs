@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Blip.HttpClient.Decorators;
-using Blip.HttpClient.Services;
 using Lime.Messaging.Contents;
 using Lime.Protocol;
 using Shouldly;
+using System.Threading;
+using System.Threading.Tasks;
 using Take.Blip.Client;
-using Takenet.Iris.Messaging.Contents;
 using Takenet.Iris.Messaging.Resources;
 using Xunit;
 
@@ -16,7 +12,7 @@ namespace Blip.HttpClient.Tests
 {
     public class BlipHttpClientUnitTests
     {
-        public ISender _client { get; set; }
+        private readonly ISender _client;
         public BlipHttpClientUnitTests()
         {
             var factory = new BlipHttpClientFactory();
@@ -104,7 +100,7 @@ namespace Blip.HttpClient.Tests
 
         [Theory]
         [InlineData("")]
-        public async Task NotificationsUnitTest(string commandSuffix)
+        public void NotificationsUnitTest(string commandSuffix)
         {
             var notification = new Notification
             {
@@ -119,7 +115,7 @@ namespace Blip.HttpClient.Tests
 
         [Theory]
         [InlineData("")]
-        public async Task MessagesUnitTest(string commandSuffix)
+        public void MessagesUnitTest(string commandSuffix)
         {
             var message = new Message
             {
