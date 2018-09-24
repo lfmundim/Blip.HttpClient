@@ -13,6 +13,19 @@ namespace Blip.HttpClient.Decorators
 {
     public class BlipHttpClientFactory
     {
+        public ISender BuildBlipHttpClient(string authKey, IDocumentTypeResolver documentTypeResolver)
+        {
+            var envelopeSerializer = new EnvelopeSerializer(documentTypeResolver);
+
+            var client = new RestClient("https://msging.net/")
+            {
+                JsonSerializerSettings = envelopeSerializer.Settings
+            }.For<IBlipHttpClient>();
+
+            client.Authorization = new AuthenticationHeaderValue("Key", authKey);
+            return new BlipHttpClient(client);
+        }
+
         public ISender BuildBlipHttpClient(string authKey)
         {
             var documentResolver = new DocumentTypeResolver();

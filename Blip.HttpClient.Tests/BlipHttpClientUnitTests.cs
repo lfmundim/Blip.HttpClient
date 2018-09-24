@@ -1,10 +1,12 @@
 using Blip.HttpClient.Decorators;
 using Lime.Messaging.Contents;
 using Lime.Protocol;
+using Lime.Protocol.Serialization;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
 using Take.Blip.Client;
+using Take.Blip.Client.Extensions;
 using Takenet.Iris.Messaging.Resources;
 using Xunit;
 
@@ -16,7 +18,9 @@ namespace Blip.HttpClient.Tests
         public BlipHttpClientUnitTests()
         {
             var factory = new BlipHttpClientFactory();
-            _client = factory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var documentResolver = new DocumentTypeResolver();
+            documentResolver.WithBlipDocuments();
+            _client = factory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", documentResolver);
         }
 
         [Theory]

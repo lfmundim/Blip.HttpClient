@@ -8,8 +8,8 @@
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>major bugfix on message endpoint</PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>Added overload method on factory to externalize creation of DocumentTypeResolver, enabling Type registration</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
