@@ -8,6 +8,8 @@
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>major bugfix on message endpoint</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
