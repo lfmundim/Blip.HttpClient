@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Lime.Protocol;
 using System.Threading;
 using System.Threading.Tasks;
-using Lime.Protocol;
 using Take.Blip.Client;
 
 namespace Blip.HttpClient.Services

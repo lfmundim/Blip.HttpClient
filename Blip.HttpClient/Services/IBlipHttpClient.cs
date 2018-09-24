@@ -1,14 +1,8 @@
-﻿using Lime.Messaging.Resources;
-using Lime.Protocol;
+﻿using Lime.Protocol;
 using RestEase;
-using System;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Take.Blip.Client;
-using Takenet.Iris.Messaging.Resources;
 
 namespace Blip.HttpClient.Services
 {
