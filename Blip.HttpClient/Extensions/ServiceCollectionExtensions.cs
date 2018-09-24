@@ -44,6 +44,13 @@ namespace Blip.HttpClient.Extensions
             return services;
         }
 
+        /// <summary>
+        /// Updates the ServiceCollection with any custom documents and BLiP's extensions
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="authKey"></param>
+        /// <param name="documentList"></param>
+        /// <returns></returns>
         public static IServiceCollection DefaultRegister(this IServiceCollection services, string authKey,
             List<Document> documentList = null)
         {

@@ -14,6 +14,13 @@ namespace Blip.HttpClient.Decorators
 {
     public class BlipHttpClientFactory
     {
+        /// <summary>
+        /// Creates or updates a Service Collection to include BLiP's extensions and any custom Documents
+        /// </summary>
+        /// <param name="authKey"></param>
+        /// <param name="documents"></param>
+        /// <param name="serviceCollection"></param>
+        /// <returns></returns>
         public IServiceCollection BuildServiceCollection(string authKey, List<Document> documents = null, IServiceCollection serviceCollection = null)
         {
             if (serviceCollection == null)
@@ -48,6 +55,12 @@ namespace Blip.HttpClient.Decorators
             return serviceCollection;
         }
 
+        /// <summary>
+        /// Builds an ISender using the given auth key and custom documents previously set
+        /// </summary>
+        /// <param name="authKey"></param>
+        /// <param name="documentTypeResolver"></param>
+        /// <returns></returns>
         public ISender BuildBlipHttpClient(string authKey, IDocumentTypeResolver documentTypeResolver)
         {
             var envelopeSerializer = new EnvelopeSerializer(documentTypeResolver);
@@ -61,6 +74,11 @@ namespace Blip.HttpClient.Decorators
             return new BlipHttpClient(client);
         }
 
+        /// <summary>
+        /// Builds an ISender using the given auth key
+        /// </summary>
+        /// <param name="authKey"></param>
+        /// <returns></returns>
         public ISender BuildBlipHttpClient(string authKey)
         {
             var documentResolver = new DocumentTypeResolver();
