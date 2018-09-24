@@ -19,3 +19,17 @@ branches:
   only:
     - develop
     - master
+
+for:
+  branches:
+    only:
+      - publish
+
+  deploy:
+    provider: NuGet
+    server:                  # remove to push to NuGet.org
+    api_key:
+      secure: lDQZfbWY+seb7mEnpM5CblG68wXaSuD2sAWfzyTiuS097kchIR7Ri2tfjnA47Hg5
+    skip_symbols: false
+    symbol_server:           # remove to push symbols to SymbolSource.org
+    artifact: /.*\.nupkg/
