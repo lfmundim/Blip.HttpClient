@@ -8,6 +8,7 @@ before_build:
 - choco install codecov
  
 build_script:
+  - dotnet clean
   - dotnet build Blip.HttpClient.sln
   - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test --logger:trx;LogFileName=results.trx /p:DebugType=full ./Blip.HttpClient.Tests/Blip.HttpClient.Tests.csproj" -output:".\my_app_coverage.xml"
   - codecov -f .\my_app_coverage.xml -t $(codecov_token)
