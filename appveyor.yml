@@ -21,6 +21,7 @@ branches:
     - master
 
 for:
+-
   branches:
     only:
       - publish
