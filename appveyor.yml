@@ -1,0 +1,20 @@
+init:
+  - git config --global core.autocrlf true
+ 
+image: Visual Studio 2017
+ 
+before_build:
+- choco install opencover.portable
+- choco install codecov
+ 
+build_script:
+  - dotnet build Blip.HttpClient.sln
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test --logger:trx;LogFileName=results.trx /p:DebugType=full ./Blip.HttpClient.Tests/Blip.HttpClient.Tests.csproj" -output:".\my_app_coverage.xml"
+  - codecov -f .\valit_coverage.xml -t $(codecov_token)
+ 
+test: off
+ 
+branches:
+  only:
+    - develop
+    - master
