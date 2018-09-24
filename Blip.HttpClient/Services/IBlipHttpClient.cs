@@ -23,7 +23,7 @@ namespace Blip.HttpClient.Services
         [Post("commands")]
         Task SendCommandAsync([Body] Command command, CancellationToken cancellationToken);
 
-        [Post("messags")]
+        [Post("messages")]
         Task SendMessageAsync([Body] Message message, CancellationToken cancellationToken);
 
         [Post("notifications")]
