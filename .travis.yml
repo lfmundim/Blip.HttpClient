@@ -5,4 +5,5 @@ script:
   - dotnet build Blip.HttpClient.sln
   - dotnet test Blip.HttpClient.Tests/Blip.HttpClient.Tests.csproj
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - tools\opencover\OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -output:".\MyProject_coverage.xml" -oldstyle
+    - tools\codecov\codecov.exe -f "MyProject_coverage.xml" -t $CODECOV_TOKEN
