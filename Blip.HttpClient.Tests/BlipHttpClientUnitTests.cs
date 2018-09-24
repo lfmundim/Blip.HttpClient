@@ -1,16 +1,17 @@
 using Blip.HttpClient.Decorators;
+using Blip.HttpClient.Extensions;
 using Lime.Messaging.Contents;
 using Lime.Protocol;
 using Lime.Protocol.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions;
 using Takenet.Iris.Messaging.Resources;
 using Xunit;
-using System.Collections.Generic;
 
 namespace Blip.HttpClient.Tests
 {
@@ -19,13 +20,10 @@ namespace Blip.HttpClient.Tests
         private readonly ISender _client;
         public BlipHttpClientUnitTests()
         {
-            var factory = new BlipHttpClientFactory();
-            var documentResolver = new DocumentTypeResolver();
-            documentResolver.WithBlipDocuments();
-            //_client = factory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", documentResolver);
             var documentList = new List<Document>();
             documentList.Add(new UserContext());
-            var services = factory.BuildServiceCollection("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", documentList);
+            var services = new ServiceCollection();
+            services.DefaultRegister("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", documentList);
             var provider = services.BuildServiceProvider();
             _client = provider.GetService<ISender>();
         }
