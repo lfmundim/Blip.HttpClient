@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+using Blip.HttpClient.Decorators;
+using Lime.Protocol;
+using Microsoft.Extensions.DependencyInjection;
 using Take.Blip.Client.Extensions.ArtificialIntelligence;
 using Take.Blip.Client.Extensions.Broadcast;
 using Take.Blip.Client.Extensions.Bucket;
@@ -39,6 +42,13 @@ namespace Blip.HttpClient.Extensions
             services.AddSingleton<ITunnelExtension, TunnelExtension>();
 
             return services;
+        }
+
+        public static IServiceCollection DefaultRegister(this IServiceCollection services, string authKey,
+            List<Document> documentList = null)
+        {
+            var factory = new BlipHttpClientFactory();
+            return factory.BuildServiceCollection(authKey, documentList, services);
         }
     }
 }
