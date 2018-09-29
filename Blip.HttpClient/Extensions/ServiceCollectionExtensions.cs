@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Blip.HttpClient.Decorators;
+using Blip.HttpClient.Factories;
 using Lime.Protocol;
 using Microsoft.Extensions.DependencyInjection;
 using Take.Blip.Client.Extensions.ArtificialIntelligence;
@@ -20,6 +20,11 @@ namespace Blip.HttpClient.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Registers BLiP's extensions on the services collection
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection RegisterBlipExtensions(this IServiceCollection services)
         {
             services.AddSingleton<IBucketExtension, BucketExtension>();

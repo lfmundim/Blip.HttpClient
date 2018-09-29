@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blip.HttpClient</name>
+    </assembly>
+    <members>
+        <member name="M:Blip.HttpClient.Extensions.ServiceCollectionExtensions.RegisterBlipExtensions(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers BLiP's extensions on the services collection
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Extensions.ServiceCollectionExtensions.DefaultRegister(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Collections.Generic.List{Lime.Protocol.Document})">
+            <summary>
+            Updates the ServiceCollection with any custom documents and BLiP's extensions
+            </summary>
+            <param name="services"></param>
+            <param name="authKey"></param>
+            <param name="documentList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildServiceCollection(System.String,System.Collections.Generic.List{Lime.Protocol.Document},Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Creates or updates a Service Collection to include BLiP's extensions and any custom Documents
+            </summary>
+            <param name="authKey"></param>
+            <param name="documents"></param>
+            <param name="serviceCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String,Lime.Protocol.Serialization.IDocumentTypeResolver)">
+            <summary>
+            Builds an ISender using the given auth key and custom documents previously set
+            </summary>
+            <param name="authKey"></param>
+            <param name="documentTypeResolver"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String)">
+            <summary>
+            Builds an ISender using the given auth key
+            </summary>
+            <param name="authKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.BlipHttpClient.ProcessCommandAsync(Lime.Protocol.Command,System.Threading.CancellationToken)">
+            <summary>
+            Sends a command to BLiP and returns its response.
+            </summary>
+            <param name="requestCommand"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.BlipHttpClient.SendCommandAsync(Lime.Protocol.Command,System.Threading.CancellationToken)">
+            <summary>
+            Sends a command to BLiP
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.BlipHttpClient.SendMessageAsync(Lime.Protocol.Message,System.Threading.CancellationToken)">
+            <summary>
+            Sends a message through BLiP to the set recipient. Message's content is a LIME Document Type.
+            </summary>
+            <param name="message"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.BlipHttpClient.SendNotificationAsync(Lime.Protocol.Notification,System.Threading.CancellationToken)">
+            <summary>
+            Sends a notification to BLiP
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

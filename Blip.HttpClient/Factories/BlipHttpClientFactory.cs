@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions;
 
-namespace Blip.HttpClient.Decorators
+namespace Blip.HttpClient.Factories
 {
     public class BlipHttpClientFactory
     {
