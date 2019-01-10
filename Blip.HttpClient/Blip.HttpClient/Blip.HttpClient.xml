@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blip.HttpClient</name>
+    </assembly>
+    <members>
+        <member name="M:Blip.HttpClient.Extensions.ServiceCollectionExtensions.DefaultRegister(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Collections.Generic.List{Lime.Protocol.Document})">
+            <summary>
+            Updates the ServiceCollection with any custom documents and BLiP's extensions
+            </summary>
+            <param name="services"></param>
+            <param name="authKey"></param>
+            <param name="documentList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildServiceCollection(System.String,System.Collections.Generic.List{Lime.Protocol.Document},Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Creates or updates a Service Collection to include BLiP's extensions and any custom Documents
+            </summary>
+            <param name="authKey"></param>
+            <param name="documents"></param>
+            <param name="serviceCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String,Lime.Protocol.Serialization.IDocumentTypeResolver)">
+            <summary>
+            Builds an ISender using the given auth key and custom documents previously set
+            </summary>
+            <param name="authKey"></param>
+            <param name="documentTypeResolver"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String)">
+            <summary>
+            Builds an ISender using the given auth key
+            </summary>
+            <param name="authKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blip.HttpClient.Services.ContactService">
+            <summary>
+            Http Abstraction of BLiP's /contact URI
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            Creates a ContactService instance to Get and Set contacts
+            </summary>
+            <param name="sender">ISender instance, from BlipHttpClientFactory</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.GetContactAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Gets the botIdentifier's contact using the identifier param
+            </summary>
+            <param name="identifier">User identifier whose contact must be recovered</param>
+            <param name="cancellationToken"></param>
+            <param name="logger">Optional ILogger from Serilog to log useful information</param>s
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.SetContactAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Sets the contact on the botIdentifier's agenda
+            </summary>
+            <param name="contact"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger">Optional ILogger from Serilog to log useful information</param>
+            <returns></returns>
+        </member>
+        <member name="T:Blip.HttpClient.Services.IContactService">
+            <summary>
+            Http Abstraction of BLiP's /contact URI
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IContactService.GetContactAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Gets the botIdentifier's contact using the identifier param
+            </summary>
+            <param name="identifier">User identifier whose contact must be recovered</param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <param name="botIdentifier">Bot identifier that has the user in its agenda</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IContactService.SetContactAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Sets the contact on the botIdentifier's agenda
+            </summary>
+            <param name="contact"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <param name="botIdentifier">Bot identifier that has the user in its agenda</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

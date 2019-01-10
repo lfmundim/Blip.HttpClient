@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Blip.HttpClient.Decorators;
+using Blip.HttpClient.Factories;
 using Lime.Protocol;
 using Microsoft.Extensions.DependencyInjection;
 using Take.Blip.Client.Extensions.ArtificialIntelligence;

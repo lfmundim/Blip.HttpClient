@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blip.HttpClient", "Blip.HttpClient\Blip.HttpClient.csproj", "{1B691FCF-E435-42E1-A350-AEC1724DCA4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blip.HttpClient.Tests", "Blip.HttpClient.Tests\Blip.HttpClient.Tests.csproj", "{2068B9F9-23CB-4003-B004-6CD8AFF7997A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blip.HttpClient.Tests", "Blip.HttpClient.Tests\Blip.HttpClient.Tests.csproj", "{2068B9F9-23CB-4003-B004-6CD8AFF7997A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

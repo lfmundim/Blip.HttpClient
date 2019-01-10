@@ -1,4 +1,4 @@
-using Blip.HttpClient.Decorators;
+using Blip.HttpClient.Factories;
 using Blip.HttpClient.Extensions;
 using Lime.Messaging.Contents;
 using Lime.Protocol;
