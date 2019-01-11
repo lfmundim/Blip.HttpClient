@@ -3,43 +3,50 @@ using Blip.HttpClient.Services;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Take.Blip.Client;
 using Xunit;
 
 namespace Blip.HttpClient.Tests
 {
     public class ContactServiceUnitTests
     {
-        private readonly ISender _sender;
         private readonly IContactService _contactService;
         public ContactServiceUnitTests()
         {
             var clientFactory = new BlipHttpClientFactory();
-            _sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
-            _contactService = new ContactService(_sender);
+            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            _contactService = new ContactService(sender);
         }
 
         [Theory]
-        [InlineData("")] //Check on how to remove this using Xtest
-        public async Task SetAndGetContactUnitTest(string empty)
+        [InlineData("")]
+        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")]
+        public async Task SetAndGetContactUnitTest(string authKey)
         {
             var id = EnvelopeId.NewId();
             var identity = Identity.Parse($"{id}.testingbots@0mn.io");
 
+            Command setResponse;
+            Contact getResponse;
+
             var contact = new Contact
-{
+            {
                 Name = id,
                 Identity = identity
-};
+            };
 
-            var setResponse = await _contactService.SetContactAsync(contact, CancellationToken.None);
-
-            var getResponse = await _contactService.GetContactAsync(identity, CancellationToken.None);
+            if (authKey.Equals(""))
+            {
+                setResponse = await _contactService.SetContactAsync(contact, CancellationToken.None);
+                getResponse = await _contactService.GetContactAsync(identity, CancellationToken.None);
+            }
+            else
+            {
+                var contactService = new ContactService(authKey);
+                setResponse = await contactService.SetContactAsync(contact, CancellationToken.None);
+                getResponse = await contactService.GetContactAsync(identity, CancellationToken.None);
+            }
 
             setResponse.Status.ShouldBe(CommandStatus.Success);
 

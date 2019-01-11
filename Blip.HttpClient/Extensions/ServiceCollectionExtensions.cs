@@ -18,6 +18,9 @@ using Take.Blip.Client.Extensions.Tunnel;
 
 namespace Blip.HttpClient.Extensions
 {
+    /// <summary>
+    /// Extensions for the IServiceCollection dependency injection interface
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection RegisterBlipExtensions(this IServiceCollection services)

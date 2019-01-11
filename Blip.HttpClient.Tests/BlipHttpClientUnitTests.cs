@@ -1,15 +1,12 @@
-using Blip.HttpClient.Factories;
 using Blip.HttpClient.Extensions;
 using Lime.Messaging.Contents;
 using Lime.Protocol;
-using Lime.Protocol.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Take.Blip.Client;
-using Take.Blip.Client.Extensions;
 using Takenet.Iris.Messaging.Resources;
 using Xunit;
 
@@ -108,12 +105,12 @@ namespace Blip.HttpClient.Tests
         }
 
         [Theory]
-        [InlineData("")]
-        public void NotificationsUnitTest(string commandSuffix)
+        [InlineData("551100001111@0mn.io/4ac58r6e3")]
+        public void NotificationsUnitTest(string from)
         {
             var notification = new Notification
             {
-                From = "551100001111@0mn.io/4ac58r6e3",
+                From = from,
                 Event = Event.Consumed
             };
 
@@ -123,12 +120,12 @@ namespace Blip.HttpClient.Tests
         }
 
         [Theory]
-        [InlineData("")]
-        public void MessagesUnitTest(string commandSuffix)
+        [InlineData("Unit tests rock!")]
+        public void MessagesUnitTest(string messageText)
         {
             var message = new Message
             {
-                Content = PlainText.Parse("Unit Tests rock!")
+                Content = PlainText.Parse(messageText)
             };
 
             var task = _client.SendMessageAsync(message, CancellationToken.None);

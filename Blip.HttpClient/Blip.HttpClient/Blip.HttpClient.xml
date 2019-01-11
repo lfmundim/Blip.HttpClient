@@ -48,23 +48,43 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.#ctor(System.String)">
+            <summary>
+            Creates a ContactService instance to Get and Set contacts using a given authKey.
+            </summary>
+            <param name="authKey">Bot authorization key</param>
+        </member>
         <member name="M:Blip.HttpClient.Services.ContactService.GetContactAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
-            Gets the botIdentifier's contact using the identifier param
+            Gets the Bot's Contact using the <paramref name="identifier"/> param
             </summary>
             <param name="identifier">User identifier whose contact must be recovered</param>
             <param name="cancellationToken"></param>
-            <param name="logger">Optional ILogger from Serilog to log useful information</param>s
-            <returns></returns>
+            <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+            <returns>Lime <c>Contact</c> response object</returns>
+            <example>
+            <code>
+            Contact x = await _contactService.GetContactAsync(contact, cancellationToken, logger)
+            </code>
+            </example>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting the contact</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
         </member>
         <member name="M:Blip.HttpClient.Services.ContactService.SetContactAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
-            Sets the contact on the botIdentifier's agenda
+            Sets the <paramref name="contact"/> on the Bot's agenda
             </summary>
             <param name="contact"></param>
             <param name="cancellationToken"></param>
-            <param name="logger">Optional ILogger from Serilog to log useful information</param>
-            <returns></returns>
+            <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <example>
+            <code>
+            Command x = await _contactService.SetContactAsync(contact, cancellationToken, logger)
+            </code>
+            </example>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
         </member>
         <member name="T:Blip.HttpClient.Services.IContactService">
             <summary>
@@ -73,23 +93,35 @@
         </member>
         <member name="M:Blip.HttpClient.Services.IContactService.GetContactAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
-            Gets the botIdentifier's contact using the identifier param
+            Gets the Bot's Contact using the <paramref name="identifier"/> param
             </summary>
             <param name="identifier">User identifier whose contact must be recovered</param>
             <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <param name="botIdentifier">Bot identifier that has the user in its agenda</param>
-            <returns></returns>
+            <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+            <returns>Lime <c>Contact</c> response object</returns>
+            <example>
+            <code>
+            Contact x = await _contactService.GetContactAsync(contact, cancellationToken, logger)
+            </code>
+            </example>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting the contact</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
         </member>
         <member name="M:Blip.HttpClient.Services.IContactService.SetContactAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
-            Sets the contact on the botIdentifier's agenda
+            Sets the <paramref name="contact"/> on the Bot's agenda
             </summary>
             <param name="contact"></param>
             <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <param name="botIdentifier">Bot identifier that has the user in its agenda</param>
-            <returns></returns>
+            <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <example>
+            <code>
+            Command x = await _contactService.SetContactAsync(contact, cancellationToken, logger)
+            </code>
+            </example>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
         </member>
     </members>
 </doc>

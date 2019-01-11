@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
+using Lime.Protocol.Network;
 using Serilog;
 using Take.Blip.Client;
 
@@ -28,12 +30,29 @@ namespace Blip.HttpClient.Services
         }
 
         /// <summary>
-        /// Gets the botIdentifier's contact using the identifier param
+        /// Creates a ContactService instance to Get and Set contacts using a given authKey.
+        /// </summary>
+        /// <param name="authKey">Bot authorization key</param>
+        public ContactService(string authKey)
+        {
+            var factory = new BlipHttpClientFactory();
+            _sender = factory.BuildBlipHttpClient(authKey);
+        }
+
+        /// <summary>
+        /// Gets the Bot's Contact using the <paramref name="identifier"/> param
         /// </summary>
         /// <param name="identifier">User identifier whose contact must be recovered</param>
         /// <param name="cancellationToken"></param>
-        /// <param name="logger">Optional ILogger from Serilog to log useful information</param>s
-        /// <returns></returns>
+        /// <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+        /// <returns>Lime <c>Contact</c> response object</returns>
+        /// <example>
+        /// <code>
+        /// Contact x = await _contactService.GetContactAsync(contact, cancellationToken, logger)
+        /// </code>
+        /// </example>
+        /// <exception cref="BlipHttpClientException">Failure getting the contact</exception>
+        /// <exception cref="Exception">Unknown error</exception>
         public async Task<Contact> GetContactAsync(string identifier, CancellationToken cancellationToken, ILogger logger = null)
         {
             try
@@ -43,45 +62,65 @@ namespace Blip.HttpClient.Services
                     Method = CommandMethod.Get,
                     Uri = new LimeUri($"/contacts/{identifier}")
                 };
-                if(logger != null) logger.Information("[GetContact] Trying get contact using {@identity}'s", identifier);
+                logger?.Information("[GetContact] Trying get contact using {@identity}'s", identifier);
                 var contactResponse = await _sender.ProcessCommandAsync(command, cancellationToken);
-                if (logger != null) logger.Information("[GetContact] Got contact using {@identity}'s contact: {@contact}", identifier, contactResponse.Resource as Contact);
+                if (contactResponse.Status != CommandStatus.Success)
+                {
+                    throw new BlipHttpClientException("Failed to get contact from BLiP's agenda.", contactResponse);
+                }
+                logger?.Information("[GetContact] Got contact using {@identity}'s contact: {@contact}", identifier, contactResponse.Resource as Contact);
                 return contactResponse.Resource as Contact;
             }
             catch (Exception ex)
             {
-                if (logger != null) logger.Error(ex, "[GetContact] Failed to get contact using {@identity}'s contact", identifier);
+                logger?.Error(ex, "[GetContact] Failed to get contact using {@identity}'s contact", identifier);
                 throw ex;
             }
         }
 
         /// <summary>
-        /// Sets the contact on the botIdentifier's agenda
+        /// Sets the <paramref name="contact"/> on the Bot's agenda
         /// </summary>
         /// <param name="contact"></param>
         /// <param name="cancellationToken"></param>
-        /// <param name="logger">Optional ILogger from Serilog to log useful information</param>
-        /// <returns></returns>
+        /// <param name="logger">Optional <c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+        /// <returns>Lime <c>Command</c> response object</returns>
+        /// <example>
+        /// <code>
+        /// Command x = await _contactService.SetContactAsync(contact, cancellationToken, logger)
+        /// </code>
+        /// </example>
+        /// <exception cref="BlipHttpClientException">Failure setting the contact</exception>
+        /// <exception cref="Exception">Unknown error</exception>
         public async Task<Command> SetContactAsync(Contact contact, CancellationToken cancellationToken, ILogger logger = null)
         {
             try
-            { 
+            {
                 var command = new Command()
                 {
                     Method = CommandMethod.Set,
-                    Uri = new LimeUri($"/contacts"),
+                    Uri = new LimeUri("/contacts"),
                     Resource = contact
                 };
 
-                if (logger != null) logger.Information("[GetContact] Trying set contact {@contact}", contact);
+                logger?.Information("[SetContact] Trying set contact {@contact}", contact);
                 var contactResponse = await _sender.ProcessCommandAsync(command, cancellationToken);
-                if (logger != null) logger.Information("[GetContact] Set contact {@contact}", contact);
+                if (contactResponse.Status != CommandStatus.Success)
+                {
+                    throw new BlipHttpClientException("Failed to set contact on BLiP's agenda.", contactResponse);
+                }
+                logger?.Information("[SetContact] Set contact {@contact}", contact);
 
                 return contactResponse;
             }
+            catch (BlipHttpClientException bex)
+            {
+                logger?.Error(bex, "[SetContact] Failed to set contact {@contact}", contact);
+                throw bex;
+            }
             catch (Exception ex)
             {
-                if (logger != null) logger.Error(ex, "[GetContact] Failed to set contact {@contact}", contact);
+                logger?.Error(ex, "[SetContact] Failed to set contact {@contact}", contact);
                 throw ex;
             }
         }
