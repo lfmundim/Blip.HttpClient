@@ -23,6 +23,11 @@ namespace Blip.HttpClient.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Registers BLiP's extensions on the services collection
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection RegisterBlipExtensions(this IServiceCollection services)
         {
             services.AddSingleton<IBucketExtension, BucketExtension>();
