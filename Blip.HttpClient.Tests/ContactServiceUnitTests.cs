@@ -2,6 +2,7 @@
 using Blip.HttpClient.Services;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
+using Serilog;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,11 +13,16 @@ namespace Blip.HttpClient.Tests
     public class ContactServiceUnitTests
     {
         private readonly IContactService _contactService;
+        private readonly ILogger _logger;
         public ContactServiceUnitTests()
         {
             var clientFactory = new BlipHttpClientFactory();
             var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
             _contactService = new ContactService(sender);
+            _logger = new LoggerConfiguration()
+                     .Enrich.WithProperty("Application", "UnitTests")
+                     .MinimumLevel.Debug()
+                     .CreateLogger();
         }
 
         [Theory]
@@ -38,14 +44,14 @@ namespace Blip.HttpClient.Tests
 
             if (authKey.Equals(""))
             {
-                setResponse = await _contactService.SetContactAsync(contact, CancellationToken.None);
-                getResponse = await _contactService.GetContactAsync(identity, CancellationToken.None);
+                setResponse = await _contactService.SetAsync(contact, CancellationToken.None, _logger);
+                getResponse = await _contactService.GetAsync(identity, CancellationToken.None, _logger);
             }
             else
             {
                 var contactService = new ContactService(authKey);
-                setResponse = await contactService.SetContactAsync(contact, CancellationToken.None);
-                getResponse = await contactService.GetContactAsync(identity, CancellationToken.None);
+                setResponse = await contactService.SetAsync(contact, CancellationToken.None, _logger);
+                getResponse = await contactService.GetAsync(identity, CancellationToken.None, _logger);
             }
 
             setResponse.Status.ShouldBe(CommandStatus.Success);
