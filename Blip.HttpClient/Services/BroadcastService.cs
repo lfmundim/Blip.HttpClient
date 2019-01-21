@@ -16,11 +16,19 @@ namespace Blip.HttpClient.Services
     {
         private readonly ISender _sender;
 
+        /// <summary>
+        /// Creates an instance of the BroadcastService using a BLiP Client
+        /// </summary>
+        /// <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         public BroadcastService(ISender sender)
         {
             _sender = sender;
         }
 
+        /// <summary>
+        /// Creates a BroadcastService instance using a given authKey.
+        /// </summary>
+        /// <param name="authKey">Bot authorization key</param>
         public BroadcastService(string authKey)
         {
             var factory = new BlipHttpClientFactory();

@@ -22,7 +22,7 @@ namespace Blip.HttpClient.Services
         private readonly ISender _sender;
 
         /// <summary>
-        /// Creates a ContactService instance to Get and Set contacts
+        /// Creates a ContactService instance using a BLiP client
         /// </summary>
         /// <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         public ContactService(ISender sender)
@@ -31,7 +31,7 @@ namespace Blip.HttpClient.Services
         }
 
         /// <summary>
-        /// Creates a ContactService instance to Get and Set contacts using a given authKey.
+        /// Creates a ContactService instance using a given authKey.
         /// </summary>
         /// <param name="authKey">Bot authorization key</param>
         public ContactService(string authKey)
