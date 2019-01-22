@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Blip.HttpClient.Exceptions;
+﻿using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
-using Lime.Protocol.Network;
 using Serilog;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions.Contacts;
 
@@ -46,22 +43,22 @@ namespace Blip.HttpClient.Services
         /// <param name="identity"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="BlipHttpClientException">Failure deleting the contact</exception>
-        /// <exception cref="Exception">Unknown error</exception>
         public async Task DeleteAsync(Identity identity, CancellationToken cancellationToken)
         {
-            try
-            {
-                var contactExtension = new ContactExtension(_sender);
-                await contactExtension.DeleteAsync(identity, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var contactExtension = new ContactExtension(_sender);
+            await contactExtension.DeleteAsync(identity, cancellationToken);
         }
 
-        public async Task DeleteAsync(Identity identity, CancellationToken cancellationToken, ILogger logger)
+        /// <summary>
+        /// Deletes a contact from the bot's agenda
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="logger"></param>
+        /// <returns>Lime <c>Command</c> response object</returns>
+        /// <exception cref="BlipHttpClientException">Failure deleting the contact</exception>
+        /// <exception cref="Exception">Unknown error</exception>
+        public async Task<Command> DeleteAsync(Identity identity, CancellationToken cancellationToken, ILogger logger)
         {
             try
             {
@@ -77,16 +74,18 @@ namespace Blip.HttpClient.Services
                     throw new BlipHttpClientException("Failed to delete contact from BLiP's agenda.", deleteResponse);
                 }
                 logger.Information("[DeleteContact] Successfully deleted {@identity} from BLiP's agenda", identity);
+
+                return deleteResponse;
             }
             catch (BlipHttpClientException bex)
             {
                 logger.Error(bex, "[DeleteContact] Failed to delete contact with identity {@identity}", identity);
-                throw bex;
+                throw;
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "[DeleteContact] Failed to delete contact with identity {@identity}", identity);
-                throw ex;
+                throw;
             }
         }
 
@@ -98,16 +97,9 @@ namespace Blip.HttpClient.Services
         /// <returns></returns>
         public async Task<Contact> GetAsync(Identity identity, CancellationToken cancellationToken)
         {
-            try
-            {
-                var contactExtension = new ContactExtension(_sender);
-                var contact = await contactExtension.GetAsync(identity, cancellationToken);
-                return contact;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var contactExtension = new ContactExtension(_sender);
+            var contact = await contactExtension.GetAsync(identity, cancellationToken);
+            return contact;
         }
 
         /// <summary>
@@ -139,13 +131,20 @@ namespace Blip.HttpClient.Services
                 {
                     throw new BlipHttpClientException("Failed to get contact from BLiP's agenda.", contactResponse);
                 }
-                logger?.Information("[GetContact] Got contact using {@identity}'s contact: {@contact}", identity, contactResponse.Resource as Contact);
+
+                logger?.Information("[GetContact] Got contact using {@identity}'s contact: {@contact}", identity,
+                    contactResponse.Resource as Contact);
                 return contactResponse.Resource as Contact;
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger?.Error(bex, "[GetContact] Failed to get contact using {@identity}'s contact", identity);
+                throw;
             }
             catch (Exception ex)
             {
                 logger?.Error(ex, "[GetContact] Failed to get contact using {@identity}'s contact", identity);
-                throw ex;
+                throw;
             }
         }
 
@@ -158,18 +157,21 @@ namespace Blip.HttpClient.Services
         /// <returns></returns>
         public async Task MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken)
         {
-            try
-            {
-                var contactExtension = new ContactExtension(_sender);
-                await contactExtension.MergeAsync(identity, contact, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var contactExtension = new ContactExtension(_sender);
+            await contactExtension.MergeAsync(identity, contact, cancellationToken);
         }
 
-        public async Task MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken, ILogger logger)
+        /// <summary>
+        /// Merges the <paramref name="contact"/> with the existing one on the Bot's agenda
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <param name="contact"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="logger"><c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+        /// <returns>Lime <c>Command</c> response object</returns>
+        /// <exception cref="BlipHttpClientException">Failure merging the contact</exception>
+        /// <exception cref="Exception">Unknown error</exception>
+        public async Task<Command> MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken, ILogger logger)
         {
             try
             {
@@ -186,37 +188,35 @@ namespace Blip.HttpClient.Services
                     throw new BlipHttpClientException($"Failed to merge contact on BLiP's agenda using {identity} and {contact}", contactResponse);
                 }
                 logger?.Information("[MergeContact] Successfully merged contact using {@identity} and {@contact}", identity, contact);
+                return contactResponse;
             }
             catch (BlipHttpClientException bex)
             {
                 logger?.Error(bex, "[MergeContact] Failed to merge contact using {@identity} and {@contact}", identity, contact);
-                throw bex;
+                throw;
             }
             catch (Exception ex)
             {
                 logger?.Error(ex, "[MergeContact] Failed to merge contact using {@identity} and {@contact}", identity, contact);
-                throw ex;
+                throw;
             }
         }
 
         /// <summary>
-        /// 
+        /// Sets the <paramref name="contact"/> on the Bot's agenda
         /// </summary>
         /// <param name="identity"></param>
         /// <param name="contact"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <example>
+        /// <code>
+        /// Command x = await _contactService.SetContactAsync(contact, cancellationToken)
+        /// </code>
+        /// </example>
         public async Task SetAsync(Identity identity, Contact contact, CancellationToken cancellationToken)
         {
-            try
-            {
-                var contactExtension = new ContactExtension(_sender);
-                await contactExtension.SetAsync(identity, contact, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var contactExtension = new ContactExtension(_sender);
+            await contactExtension.SetAsync(identity, contact, cancellationToken);
         }
 
         /// <summary>
@@ -257,12 +257,12 @@ namespace Blip.HttpClient.Services
             catch (BlipHttpClientException bex)
             {
                 logger?.Error(bex, "[SetContact] Failed to set contact {@contact}", contact);
-                throw bex;
+                throw;
             }
             catch (Exception ex)
             {
                 logger?.Error(ex, "[SetContact] Failed to set contact {@contact}", contact);
-                throw ex;
+                throw;
             }
         }
     }

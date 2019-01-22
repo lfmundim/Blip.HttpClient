@@ -4,6 +4,31 @@
         <name>Blip.HttpClient</name>
     </assembly>
     <members>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException._message">
+            <summary>
+            Exception message
+            </summary>
+        </member>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.ResponseStatus">
+            <summary>
+            Response status returned by the BLiP API
+            </summary>
+        </member>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.Reason">
+            <summary>
+            Reason for failure returned by the BLiP API
+            </summary>
+        </member>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.Id">
+            <summary>
+            Error ID returned by the BLiP API
+            </summary>
+        </member>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.Resource">
+            <summary>
+            Any extra resources returned by the BLiP API
+            </summary>
+        </member>
         <member name="T:Blip.HttpClient.Extensions.ServiceCollectionExtensions">
             <summary>
             Extensions for the IServiceCollection dependency injection interface
@@ -81,18 +106,6 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.#ctor(Take.Blip.Client.ISender)">
-            <summary>
-            Creates an instance of the BroadcastService using a BLiP Client
-            </summary>
-            <param name="sender">ISender instance, from BlipHttpClientFactory</param>
-        </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.#ctor(System.String)">
-            <summary>
-            Creates a BroadcastService instance using a given authKey.
-            </summary>
-            <param name="authKey">Bot authorization key</param>
-        </member>
         <member name="T:Blip.HttpClient.Services.ContactService">
             <summary>
             Http Abstraction of BLiP's /contact URI
@@ -117,6 +130,15 @@
             <param name="identity"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Deletes a contact from the bot's agenda
+            </summary>
+            <param name="identity"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <returns>Lime <c>Command</c> response object</returns>
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
@@ -153,14 +175,30 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.SetAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.ContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
-            
+            Merges the <paramref name="contact"/> with the existing one on the Bot's agenda
             </summary>
             <param name="identity"></param>
             <param name="contact"></param>
             <param name="cancellationToken"></param>
-            <returns></returns>
+            <param name="logger"><c>ILogger</c> from <c>Serilog</c> to log useful information</param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure merging the contact</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ContactService.SetAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
+            <summary>
+            Sets the <paramref name="contact"/> on the Bot's agenda
+            </summary>
+            <param name="identity"></param>
+            <param name="contact"></param>
+            <param name="cancellationToken"></param>
+            <example>
+            <code>
+            Command x = await _contactService.SetContactAsync(contact, cancellationToken)
+            </code>
+            </example>
         </member>
         <member name="M:Blip.HttpClient.Services.ContactService.SetAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>

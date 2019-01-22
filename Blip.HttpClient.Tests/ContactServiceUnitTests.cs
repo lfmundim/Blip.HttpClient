@@ -1,20 +1,17 @@
-﻿using Blip.HttpClient.Factories;
+﻿using Blip.HttpClient.Exceptions;
+using Blip.HttpClient.Factories;
 using Blip.HttpClient.Services;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using Serilog;
-using Serilog.Events;
-using Serilog.Sinks.TestCorrelator;
 using Shouldly;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentAssertions;
-using System.Linq;
-using NSubstitute;
-using System.Collections.Generic;
-using Xunit;
 using Take.Blip.Client;
-using Blip.HttpClient.Exceptions;
+using Xunit;
 
 namespace Blip.HttpClient.Tests
 {
@@ -68,27 +65,304 @@ namespace Blip.HttpClient.Tests
             getResponse.GetMediaType().ToString().ShouldBe("application/vnd.lime.contact+json");
         }
 
-        [Theory]
-        [InlineData(true, false)]
-        [InlineData(false, true)]
+        [Fact]
+        public async Task MergeContactUnitTest()
+        {
+            var id = EnvelopeId.NewId();
+            var identity = Identity.Parse($"{id}.testingbots@0mn.io");
 
-        public async Task SetAndGetContactUnitTest_ShouldThrowExceptions(bool shouldThrowBlipEx, bool shouldThrowGenericEx)
+            var contact = new Contact
+            {
+                Name = id,
+                Identity = identity
+            };
+
+            var mergeResponse = await _contactService.MergeAsync(identity, contact, CancellationToken.None, _logger);
+
+            mergeResponse.Status.ShouldBe(CommandStatus.Success);
+        }
+
+        [Fact]
+        public async Task DeleteContactUnitTest()
+        {
+            var identity = Identity.Parse("unittests.testingbots@0mn.io");
+
+            var contact = new Contact
+            {
+                Identity = identity
+            };
+            await _contactService.SetAsync(identity, contact, CancellationToken.None);
+
+            var deleteResponse = await _contactService.DeleteAsync(identity, CancellationToken.None, _logger);
+
+            deleteResponse.Status.ShouldBe(CommandStatus.Success);
+        }
+
+        #region SetContact_Log
+        [Fact]
+        public async Task SetContactLogUnitTest_ShouldSucceed()
+        {
+            var contact = new Contact();
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            var task = contactService.SetAsync(contact, CancellationToken.None, logger);
+
+            await TestInfoLogsWithOneArg<Contact>(task, 2, logger);
+        }
+
+        [Fact]
+        public async Task SetContactLogUnitTest_ShouldThrowBlipHttpClientEx()
+        {
+            var contact = new Contact();
+            var logger = Substitute.For<ILogger>();
+            var client = BuildSenderSubstitute_ReturnsFailureStatus();
+            var contactService = new ContactService(client);
+            try
+            {
+                await contactService.SetAsync(contact, CancellationToken.None, logger);
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Contact>());
+            }
+        }
+
+        [Fact]
+        public async Task SetContactLogUnitTest_ShouldThrowEx()
+        {
+            var contact = new Contact();
+            var logger = Substitute.For<ILogger>();
+            var client = BuildSenderSubstitute_ThrowsException();
+            var contactService = new ContactService(client);
+            try
+            {
+                await contactService.SetAsync(contact, CancellationToken.None, logger);
+            }
+            catch (Exception ex)
+            {
+                logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Contact>());
+            }
+        }
+        #endregion
+
+        #region GetContact_Log
+        [Fact]
+        public async Task GetContactLogUnitTest_ShouldSucceed()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            await contactService.GetAsync(identity, CancellationToken.None, logger);
+
+            logger.Received(1).Information(Arg.Any<string>(), Arg.Any<Identity>());
+            logger.Received(1).Information(Arg.Any<string>(), Arg.Any<Identity>(), Arg.Any<Contact>());
+        }
+
+        [Fact]
+        public async Task GetContactLogUnitTest_ShouldThrowBlipHttpClientEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var logger = Substitute.For<ILogger>();
+            var client = BuildSenderSubstitute_ReturnsFailureStatus();
+
+            var contactService = new ContactService(client);
+            try
+            {
+                await contactService.GetAsync(identity, CancellationToken.None, logger);
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>());
+            }
+        }
+
+        [Fact]
+        public async Task GetContactLogUnitTest_ShouldThrowEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var logger = Substitute.For<ILogger>();
+            var client = BuildSenderSubstitute_ThrowsException();
+
+            var contactService = new ContactService(client);
+            try
+            {
+                await contactService.GetAsync(identity, CancellationToken.None, logger);
+            }
+            catch (Exception ex)
+            {
+                logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>());
+            }
+        }
+        #endregion
+
+        #region MergeContact_Log
+        [Fact]
+        public async Task MergeContactLogUnitTest_ShouldSucceed()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var contact = new Contact();
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+
+            var task = contactService.MergeAsync(identity, contact, CancellationToken.None, logger);
+
+            await TestInfoLogsWithTwoArgs<Identity, Contact>(task, 2, logger);
+        }
+
+        [Fact]
+        public async Task MergeContactLogUnitTest_ShouldThrowBlipHttpClientEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var contact = new Contact();
+            var client = BuildSenderSubstitute_ReturnsFailureStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            try
+            {
+                await contactService.MergeAsync(identity, contact, CancellationToken.None, logger);
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>(), Arg.Any<Contact>());
+            }
+        }
+
+        [Fact]
+        public async Task MergeContactLogUnitTest_ShouldThrowEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var contact = new Contact();
+            var client = BuildSenderSubstitute_ThrowsException();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            try
+            {
+                await contactService.MergeAsync(identity, contact, CancellationToken.None, logger);
+            }
+            catch (Exception ex)
+            {
+                logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>(), Arg.Any<Contact>());
+            }
+        }
+        #endregion
+
+        #region DeleteContact_Log
+        [Fact]
+        public async Task DeleteContactLogUnitTest_ShouldSucceed()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+
+            var task = contactService.DeleteAsync(identity, CancellationToken.None, logger);
+
+            await TestInfoLogsWithOneArg<Identity>(task, 2, logger);
+        }
+
+        [Fact]
+        public async Task DeleteContactLogUnitTest_ShouldThrowBlipHttpClientEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            try
+            {
+                await contactService.DeleteAsync(identity, CancellationToken.None, logger);
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>());
+            }
+        }
+
+        [Fact]
+        public async Task DeleteContactLogUnitTest_ShouldThrowEx()
+        {
+            var identity = Identity.Parse("unittest.testingbots@0mn.io");
+            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var contactService = new ContactService(client);
+            var logger = Substitute.For<ILogger>();
+            try
+            {
+                await contactService.DeleteAsync(identity, CancellationToken.None, logger);
+            }
+            catch (Exception ex)
+            {
+                logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>());
+            }
+        }
+        #endregion
+
+        #region Private aux methods
+        private static ISender BuildSenderSubstitute_ReturnsSuccessStatus()
         {
             var client = Substitute.For<ISender>();
-            client.WhenForAnyArgs(client.ProcessCommandAsync()).WhenCalled()
+
+            var responseCommand = new Command()
+            {
+                Status = CommandStatus.Success,
+                Reason = new Reason()
+                {
+                    Description = "Unit Tests",
+                    Code = 42
+                },
+                Resource = new Contact()
+            };
+
+            client
+                .ProcessCommandAsync(Arg.Any<Command>(), Arg.Any<CancellationToken>())
+                .Returns(responseCommand);
+            return client;
         }
 
-        private async Task<T> TestLogsWithOneArg<T, T1>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel, T1 firstArg)
+        private static ISender BuildSenderSubstitute_ReturnsFailureStatus()
         {
-            var taskResponse = await testTask;
-            _logger.ReceivedWithAnyArgs().Information(Arg.Any<string>(), Arg.Any<T1>());
-            return taskResponse;
+            var client = Substitute.For<ISender>();
+
+            var responseCommand = new Command()
+            {
+                Status = CommandStatus.Failure,
+                Reason = new Reason()
+                {
+                    Description = "Unit Tests",
+                    Code = 42
+                }
+            };
+
+            client
+                .ProcessCommandAsync(Arg.Any<Command>(), Arg.Any<CancellationToken>())
+                .Returns(responseCommand);
+            return client;
         }
-        private async Task<T> TestLogsWithTwoArgs<T, T1, T2>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel, T1 firstArg, T2 secondArg)
+
+        private static ISender BuildSenderSubstitute_ThrowsException()
         {
-            var taskResponse = await testTask;
-            _logger.ReceivedWithAnyArgs().Information(Arg.Any<string>(), Arg.Any<T1>(), Arg.Any<T2>());
-            return taskResponse;
+            var client = Substitute.For<ISender>();
+
+            var exResponse = new Exception("Unit Tests");
+
+            client
+                .ProcessCommandAsync(Arg.Any<Command>(), Arg.Any<CancellationToken>())
+                .Throws(exResponse);
+            return client;
         }
+
+        private async Task TestInfoLogsWithOneArg<T>(Task testTask, int expectedLogCount, ILogger logger)
+        {
+            await testTask;
+            logger.Received(expectedLogCount).Information(Arg.Any<string>(), Arg.Any<T>());
+        }
+
+        private async Task TestInfoLogsWithTwoArgs<T1, T2>(Task testTask, int expectedLogCount, ILogger logger)
+        {
+            await testTask;
+            logger.Received(expectedLogCount).Information(Arg.Any<string>(), Arg.Any<T1>(), Arg.Any<T2>());
+        }
+        #endregion
     }
 }

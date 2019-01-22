@@ -56,7 +56,7 @@ namespace Blip.HttpClient.Services
         /// <returns></returns>
         /// <exception cref="BlipHttpClientException">Failure setting the contact</exception>
         /// <exception cref="Exception">Unknown error</exception>
-        Task MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken, ILogger logger);
+        Task<Command> MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken, ILogger logger);
 
         /// <summary>
         /// Deletes the <paramref name="identity"/> contact from the Bot's BLiP Agenda
@@ -67,6 +67,6 @@ namespace Blip.HttpClient.Services
         /// <returns></returns>
         /// <exception cref="BlipHttpClientException">Failure setting the contact</exception>
         /// <exception cref="Exception">Unknown error</exception>
-        Task DeleteAsync(Identity identity, CancellationToken cancellationToken, ILogger logger);
+        Task<Command> DeleteAsync(Identity identity, CancellationToken cancellationToken, ILogger logger);
     }
 }
