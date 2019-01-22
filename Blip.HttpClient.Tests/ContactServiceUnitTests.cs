@@ -3,9 +3,12 @@ using Blip.HttpClient.Services;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.TestCorrelator;
 using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
 
 namespace Blip.HttpClient.Tests
@@ -19,10 +22,7 @@ namespace Blip.HttpClient.Tests
             var clientFactory = new BlipHttpClientFactory();
             var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
             _contactService = new ContactService(sender);
-            _logger = new LoggerConfiguration()
-                     .Enrich.WithProperty("Application", "UnitTests")
-                     .MinimumLevel.Debug()
-                     .CreateLogger();
+            _logger = new LoggerConfiguration().WriteTo.TestCorrelator().CreateLogger();
         }
 
         [Theory]
@@ -44,14 +44,14 @@ namespace Blip.HttpClient.Tests
 
             if (authKey.Equals(""))
             {
-                setResponse = await _contactService.SetAsync(contact, CancellationToken.None, _logger);
-                getResponse = await _contactService.GetAsync(identity, CancellationToken.None, _logger);
+                setResponse = await TestLogs(_contactService.SetAsync(contact, CancellationToken.None, _logger), 2, LogEventLevel.Information);
+                getResponse = await TestLogs(_contactService.GetAsync(identity, CancellationToken.None, _logger), 2, LogEventLevel.Information);
             }
             else
             {
                 var contactService = new ContactService(authKey);
-                setResponse = await contactService.SetAsync(contact, CancellationToken.None, _logger);
-                getResponse = await contactService.GetAsync(identity, CancellationToken.None, _logger);
+                setResponse = await TestLogs(contactService.SetAsync(contact, CancellationToken.None, _logger), 2, LogEventLevel.Information);
+                getResponse = await TestLogs(contactService.GetAsync(identity, CancellationToken.None, _logger), 2, LogEventLevel.Information);
             }
 
             setResponse.Status.ShouldBe(CommandStatus.Success);
@@ -60,6 +60,18 @@ namespace Blip.HttpClient.Tests
             getResponse.Name.ShouldBe(id);
             getResponse.Identity.ShouldBe(identity);
             getResponse.GetMediaType().ToString().ShouldBe("application/vnd.lime.contact+json");
+        }
+
+        private async Task<T> TestLogs<T>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel)
+        {
+            using (var context = TestCorrelator.CreateContext())
+            {
+                var taskResponse = await testTask;
+                var test = TestCorrelator.GetLogEventsFromCurrentContext();
+                test.Should().Contain(log => log.Level == expectedLogLevel);
+                
+                return taskResponse;
+            }
         }
     }
 }
