@@ -9,7 +9,12 @@ using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using System.Linq;
+using NSubstitute;
+using System.Collections.Generic;
 using Xunit;
+using Take.Blip.Client;
+using Blip.HttpClient.Exceptions;
 
 namespace Blip.HttpClient.Tests
 {
@@ -19,15 +24,16 @@ namespace Blip.HttpClient.Tests
         private readonly ILogger _logger;
         public ContactServiceUnitTests()
         {
+            //tests de logs e de client separados
             var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM="); //Substitute.For<ISender>();
             _contactService = new ContactService(sender);
-            _logger = new LoggerConfiguration().WriteTo.TestCorrelator().CreateLogger();
+            _logger = Substitute.For<ILogger>();
         }
 
         [Theory]
         [InlineData("")]
-        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")]
+        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")] //set wrong auth key to force errors
         public async Task SetAndGetContactUnitTest(string authKey)
         {
             var id = EnvelopeId.NewId();
@@ -44,14 +50,14 @@ namespace Blip.HttpClient.Tests
 
             if (authKey.Equals(""))
             {
-                setResponse = await TestLogs(_contactService.SetAsync(contact, CancellationToken.None, _logger), 2, LogEventLevel.Information);
-                getResponse = await TestLogs(_contactService.GetAsync(identity, CancellationToken.None, _logger), 2, LogEventLevel.Information);
+                setResponse = await _contactService.SetAsync(contact, CancellationToken.None, _logger);
+                getResponse = await _contactService.GetAsync(identity, CancellationToken.None, _logger);
             }
             else
             {
                 var contactService = new ContactService(authKey);
-                setResponse = await TestLogs(contactService.SetAsync(contact, CancellationToken.None, _logger), 2, LogEventLevel.Information);
-                getResponse = await TestLogs(contactService.GetAsync(identity, CancellationToken.None, _logger), 2, LogEventLevel.Information);
+                setResponse = await contactService.SetAsync(contact, CancellationToken.None, _logger);
+                getResponse = await contactService.GetAsync(identity, CancellationToken.None, _logger);
             }
 
             setResponse.Status.ShouldBe(CommandStatus.Success);
@@ -62,16 +68,27 @@ namespace Blip.HttpClient.Tests
             getResponse.GetMediaType().ToString().ShouldBe("application/vnd.lime.contact+json");
         }
 
-        private async Task<T> TestLogs<T>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel)
+        [Theory]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+
+        public async Task SetAndGetContactUnitTest_ShouldThrowExceptions(bool shouldThrowBlipEx, bool shouldThrowGenericEx)
         {
-            using (var context = TestCorrelator.CreateContext())
-            {
-                var taskResponse = await testTask;
-                var test = TestCorrelator.GetLogEventsFromCurrentContext();
-                test.Should().Contain(log => log.Level == expectedLogLevel);
-                
-                return taskResponse;
-            }
+            var client = Substitute.For<ISender>();
+            client.WhenForAnyArgs(client.ProcessCommandAsync()).WhenCalled()
+        }
+
+        private async Task<T> TestLogsWithOneArg<T, T1>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel, T1 firstArg)
+        {
+            var taskResponse = await testTask;
+            _logger.ReceivedWithAnyArgs().Information(Arg.Any<string>(), Arg.Any<T1>());
+            return taskResponse;
+        }
+        private async Task<T> TestLogsWithTwoArgs<T, T1, T2>(Task<T> testTask, int expectedLogCount, LogEventLevel expectedLogLevel, T1 firstArg, T2 secondArg)
+        {
+            var taskResponse = await testTask;
+            _logger.ReceivedWithAnyArgs().Information(Arg.Any<string>(), Arg.Any<T1>(), Arg.Any<T2>());
+            return taskResponse;
         }
     }
 }
