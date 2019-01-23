@@ -118,6 +118,7 @@ namespace Blip.HttpClient.Tests
             var logger = Substitute.For<ILogger>();
             var client = BuildSenderSubstitute_ReturnsFailureStatus();
             var contactService = new ContactService(client);
+            var exceptionThrown = false;
             try
             {
                 await contactService.SetAsync(contact, CancellationToken.None, logger);
@@ -125,6 +126,11 @@ namespace Blip.HttpClient.Tests
             catch (BlipHttpClientException bex)
             {
                 logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Contact>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
 
@@ -135,6 +141,7 @@ namespace Blip.HttpClient.Tests
             var logger = Substitute.For<ILogger>();
             var client = BuildSenderSubstitute_ThrowsException();
             var contactService = new ContactService(client);
+            var exceptionThrown = false;
             try
             {
                 await contactService.SetAsync(contact, CancellationToken.None, logger);
@@ -142,6 +149,11 @@ namespace Blip.HttpClient.Tests
             catch (Exception ex)
             {
                 logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Contact>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
         #endregion
@@ -166,8 +178,8 @@ namespace Blip.HttpClient.Tests
             var identity = Identity.Parse("unittest.testingbots@0mn.io");
             var logger = Substitute.For<ILogger>();
             var client = BuildSenderSubstitute_ReturnsFailureStatus();
-
             var contactService = new ContactService(client);
+            var exceptionThrown = false;
             try
             {
                 await contactService.GetAsync(identity, CancellationToken.None, logger);
@@ -175,6 +187,11 @@ namespace Blip.HttpClient.Tests
             catch (BlipHttpClientException bex)
             {
                 logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
 
@@ -184,8 +201,8 @@ namespace Blip.HttpClient.Tests
             var identity = Identity.Parse("unittest.testingbots@0mn.io");
             var logger = Substitute.For<ILogger>();
             var client = BuildSenderSubstitute_ThrowsException();
-
             var contactService = new ContactService(client);
+            var exceptionThrown = false;
             try
             {
                 await contactService.GetAsync(identity, CancellationToken.None, logger);
@@ -193,6 +210,11 @@ namespace Blip.HttpClient.Tests
             catch (Exception ex)
             {
                 logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
         #endregion
@@ -220,6 +242,7 @@ namespace Blip.HttpClient.Tests
             var client = BuildSenderSubstitute_ReturnsFailureStatus();
             var contactService = new ContactService(client);
             var logger = Substitute.For<ILogger>();
+            var exceptionThrown = false;
             try
             {
                 await contactService.MergeAsync(identity, contact, CancellationToken.None, logger);
@@ -227,6 +250,11 @@ namespace Blip.HttpClient.Tests
             catch (BlipHttpClientException bex)
             {
                 logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>(), Arg.Any<Contact>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
 
@@ -238,6 +266,7 @@ namespace Blip.HttpClient.Tests
             var client = BuildSenderSubstitute_ThrowsException();
             var contactService = new ContactService(client);
             var logger = Substitute.For<ILogger>();
+            var exceptionThrown = false;
             try
             {
                 await contactService.MergeAsync(identity, contact, CancellationToken.None, logger);
@@ -245,6 +274,11 @@ namespace Blip.HttpClient.Tests
             catch (Exception ex)
             {
                 logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>(), Arg.Any<Contact>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
         #endregion
@@ -267,9 +301,10 @@ namespace Blip.HttpClient.Tests
         public async Task DeleteContactLogUnitTest_ShouldThrowBlipHttpClientEx()
         {
             var identity = Identity.Parse("unittest.testingbots@0mn.io");
-            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var client = BuildSenderSubstitute_ReturnsFailureStatus();
             var contactService = new ContactService(client);
             var logger = Substitute.For<ILogger>();
+            var exceptionThrown = false;
             try
             {
                 await contactService.DeleteAsync(identity, CancellationToken.None, logger);
@@ -277,6 +312,11 @@ namespace Blip.HttpClient.Tests
             catch (BlipHttpClientException bex)
             {
                 logger.Received(1).Error(bex, Arg.Any<string>(), Arg.Any<Identity>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
 
@@ -284,9 +324,10 @@ namespace Blip.HttpClient.Tests
         public async Task DeleteContactLogUnitTest_ShouldThrowEx()
         {
             var identity = Identity.Parse("unittest.testingbots@0mn.io");
-            var client = BuildSenderSubstitute_ReturnsSuccessStatus();
+            var client = BuildSenderSubstitute_ThrowsException();
             var contactService = new ContactService(client);
             var logger = Substitute.For<ILogger>();
+            var exceptionThrown = false;
             try
             {
                 await contactService.DeleteAsync(identity, CancellationToken.None, logger);
@@ -294,6 +335,11 @@ namespace Blip.HttpClient.Tests
             catch (Exception ex)
             {
                 logger.Received(1).Error(ex, Arg.Any<string>(), Arg.Any<Identity>());
+                exceptionThrown = true;
+            }
+            finally
+            {
+                exceptionThrown.ShouldBe(true);
             }
         }
         #endregion
