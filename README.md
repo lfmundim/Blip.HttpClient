@@ -14,12 +14,14 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 ```
 
 ### Currently available services
-|   BLiP              | Package           |
-|:-------------------:|:-----------------:|
-| `IContactExtension` | `IContactService` |
+|   BLiP                |   Package           |
+|:---------------------:|:-------------------:|
+| `IContactExtension`   | `IContactService`   |
+| `IBroadcastExtension` | `IBroadcastService` |
 
 ### Roadmap 
-* `IBroadcastExtension`
+* `IContactExtension` ✅ (v2.0.0)
+* `IBroadcastExtension` ✅ (v2.1.0)
 * `IBucketExtension` 
 * Chat History Service (`/threads`)
 * `IEventTrackExtension`
