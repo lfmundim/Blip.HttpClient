@@ -21,16 +21,16 @@ namespace Blip.HttpClient.Tests
         private readonly ILogger _logger;
         public ContactServiceUnitTests()
         {
-            //tests de logs e de client separados
             var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM="); //Substitute.For<ISender>();
+            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
             _contactService = new ContactService(sender);
             _logger = Substitute.For<ILogger>();
         }
 
+        #region Methods unit tests
         [Theory]
         [InlineData("")]
-        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")] //set wrong auth key to force errors
+        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")]
         public async Task SetAndGetContactUnitTest(string authKey)
         {
             var id = EnvelopeId.NewId();
@@ -97,7 +97,9 @@ namespace Blip.HttpClient.Tests
 
             deleteResponse.Status.ShouldBe(CommandStatus.Success);
         }
+        #endregion
 
+        #region Log unit tests
         #region SetContact_Log
         [Fact]
         public async Task SetContactLogUnitTest_ShouldSucceed()
@@ -342,6 +344,8 @@ namespace Blip.HttpClient.Tests
                 exceptionThrown.ShouldBe(true);
             }
         }
+        #endregion
+
         #endregion
 
         #region Private aux methods
