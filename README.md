@@ -18,12 +18,14 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 |:---------------------:|:-------------------:|
 | `IContactExtension`   | `IContactService`   |
 | `IBroadcastExtension` | `IBroadcastService` |
+| `IBucketExtension`    | `IBucketService`    |
+| --------------------- | `IThreadService`    |
 
 ### Roadmap 
 * `IContactExtension` ✅ (v2.0.0)
 * `IBroadcastExtension` ✅ (v2.1.0)
-* `IBucketExtension` ✅ (unreleased)
-* Chat History Service (`/threads`)
+* `IBucketExtension` ✅ (v2.2.0)
+* Chat History Service (`/threads`) ✅ (v2.2.0)
 * `IEventTrackExtension`
 * `IResourceExtension`
 * `ISchedulerExtension`

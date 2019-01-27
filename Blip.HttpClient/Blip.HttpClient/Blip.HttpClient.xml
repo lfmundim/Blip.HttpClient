@@ -665,5 +665,73 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
+        <member name="T:Blip.HttpClient.Services.Threads.Enumerations">
+            <summary>
+            Enumerations used on Threads service
+            </summary>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Threads.Enumerations.ChatOrder">
+            <summary>
+            Order of the chat messages
+            </summary>
+        </member>
+        <member name="F:Blip.HttpClient.Services.Threads.Enumerations.ChatOrder.Asc">
+            <summary>
+            Oldest to newest
+            </summary>
+        </member>
+        <member name="F:Blip.HttpClient.Services.Threads.Enumerations.ChatOrder.Desc">
+            <summary>
+            Newest to oldest
+            </summary>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Threads.IThreadService">
+            <summary>
+            Service responsible for getting chat history
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Threads.IThreadService.GetHistoryAsync(Lime.Protocol.Identity,Blip.HttpClient.Services.Threads.Enumerations.ChatOrder,Serilog.ILogger,System.Threading.CancellationToken,System.DateTime)">
+            <summary>
+            Gets the last chatbot's messages in a specific thread. 
+            </summary>
+            <param name="userIdentity">User to recover messages</param>
+            <param name="order"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <param name="startDateTime">Date and time for first message</param>
+            <returns><c>IEnumerable</c> of Lime ThreadMessages</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting chat history</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Threads.ThreadService">
+            <summary>
+            Service responsible for getting chat history
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Threads.ThreadService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            Creates a ThreadService instance using a BLiP client
+            </summary>
+            <param name="sender">ISender instance, from BlipHttpClientFactory</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Threads.ThreadService.#ctor(System.String)">
+            <summary>
+            Creates a ThreadService instance using a given authKey.
+            </summary>
+            <param name="authKey">Bot authorization key</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Threads.ThreadService.GetHistoryAsync(Lime.Protocol.Identity,Blip.HttpClient.Services.Threads.Enumerations.ChatOrder,Serilog.ILogger,System.Threading.CancellationToken,System.DateTime)">
+            <summary>
+            Gets the last chatbot's messages in a specific thread. 
+            </summary>
+            <param name="userIdentity">User to recover messages</param>
+            <param name="order"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <param name="startDateTime">Date and time for first message</param>
+            <returns><c>IEnumerable</c> of Lime ThreadMessages</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting chat history</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
     </members>
 </doc>
