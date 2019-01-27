@@ -1,13 +1,13 @@
 ﻿using Blip.HttpClient.Exceptions;
-using Lime.Messaging.Resources;
 using Lime.Protocol;
 using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Lime.Messaging.Resources;
 using Take.Blip.Client.Extensions.Contacts;
 
-namespace Blip.HttpClient.Services
+namespace Blip.HttpClient.Services.Contacts
 {
     /// <summary>
     /// Http Abstraction of BLiP's /contact URI
@@ -56,7 +56,7 @@ namespace Blip.HttpClient.Services
         /// <returns></returns>
         /// <exception cref="BlipHttpClientException">Failure setting the contact</exception>
         /// <exception cref="Exception">Unknown error</exception>
-        Task<Command> MergeAsync(Identity identity, Contact contact, CancellationToken cancellationToken, ILogger logger);
+        Task<Command> MergeAsync(Identity identity, Lime.Messaging.Resources.Contact contact, CancellationToken cancellationToken, ILogger logger);
 
         /// <summary>
         /// Deletes the <paramref name="identity"/> contact from the Bot's BLiP Agenda

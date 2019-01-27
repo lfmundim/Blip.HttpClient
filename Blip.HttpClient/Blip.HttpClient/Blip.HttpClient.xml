@@ -127,24 +127,24 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:Blip.HttpClient.Services.BroadcastService">
+        <member name="T:Blip.HttpClient.Services.Broadcast.BroadcastService">
             <summary>
             Service responsible for managing broadcast lists and sending messages to them
             </summary>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.#ctor(Take.Blip.Client.ISender)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.#ctor(Take.Blip.Client.ISender)">
             <summary>
             Creates an instance of the BroadcastService using a BLiP Client
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.#ctor(System.String)">
             <summary>
             Creates a BroadcastService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
             Adds a recipient to a broadcast list based on the recipient's identity and the list's name
             </summary>
@@ -153,7 +153,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Adds a recipient to a broadcast list based on the recipient's identity and the list's name
             </summary>
@@ -165,14 +165,14 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure Adding identity to the broadcast list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Creates a distribution list using the given name. The <param nameref="listName"/> should ideally have the bot's <c>Identifier</c> as a prefix
             </summary>
             <param name="listName"></param>
             <param name="cancellationToken"></param>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Creates a distribution list using the given name. The <param nameref="listName"/> should ideally have the bot's <c>Identifier</c> as a prefix
             </summary>
@@ -183,7 +183,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure creating broadcast list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Deletes a given distribution list
             </summary>
@@ -191,7 +191,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Delete a distribution list using the given <paramref name="listName"/>.
             </summary>
@@ -202,7 +202,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting broadcast list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
             Removes given <paramref name="recipientIdentity"/> from the broadcast list with the name <paramref name="listName"/>
             </summary>
@@ -211,7 +211,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Removes given <paramref name="recipientIdentity"/> from the broadcast list with the name <paramref name="listName"/>
             </summary>
@@ -223,14 +223,14 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure removing user from distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.GetListIdentity(System.String)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.GetListIdentity(System.String)">
             <summary>
             Gets the list's identity based on the <paramref name="listName"/>
             </summary>
             <param name="listName"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.GetRecipientsAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.GetRecipientsAsync(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Returns a list of recipients for the list with the name <paramref name="listName"/>
             </summary>
@@ -240,7 +240,7 @@
             <param name="cancellationToken"></param>
             <returns>DocumentCollection with the items being the recovered recipients</returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.GetRecipientsAsync(Serilog.ILogger,System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.GetRecipientsAsync(Serilog.ILogger,System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Returns a list of recipients for the list with the name <paramref name="listName"/>
             </summary>
@@ -253,7 +253,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting recipients for the given distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.HasRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.HasRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
             Checks if the given <paramref name="listName"/> has the recipient <paramref name="recipientIdentity"/>
             </summary>
@@ -262,7 +262,7 @@
             <param name="cancellationToken"></param>
             <returns>Boolean indicating if the recipient is or not on the list</returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,System.String,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,System.String,System.Threading.CancellationToken)">
             <summary>
             Sends a message to the given broadcast list
             </summary>
@@ -272,7 +272,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.BroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,Serilog.ILogger,System.String,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,Serilog.ILogger,System.String,System.Threading.CancellationToken)">
             <summary>
             Sends a message to the given broadcast list
             </summary>
@@ -285,24 +285,234 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="T:Blip.HttpClient.Services.ContactService">
+        <member name="T:Blip.HttpClient.Services.Broadcast.IBroadcastService">
+            <summary>
+            Service responsible for managing broadcast lists and sending messages to them
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Adds a recipient to a broadcast list based on the recipient's identity and the list's name
+            </summary>
+            <param name="listName"></param>
+            <param name="recipientIdentity"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure Adding identity to the broadcast list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Creates a distribution list using the given name. The <param nameref="listName"/> should ideally have the bot's <c>Identifier</c> as a prefix
+            </summary>
+            <param name="listName"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure creating broadcast list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Delete a distribution list using the given <paramref name="listName"/>.
+            </summary>
+            <param name="listName"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting broadcast list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+            <summary>
+            Removes given <paramref name="recipientIdentity"/> from the broadcast list with the name <paramref name="listName"/>
+            </summary>
+            <param name="listName"></param>
+            <param name="recipientIdentity"></param>
+            <param name="cancellationToken"></param>
+            <param name="logger"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure removing user from distribution list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.GetRecipientsAsync(Serilog.ILogger,System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns a list of recipients for the list with the name <paramref name="listName"/>
+            </summary>
+            <param name="listName"></param>
+            <param name="skip">Recipients to skip from the start</param>
+            <param name="take">Amount of recipients to get</param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <returns>DocumentCollection with the items being the recovered recipients</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting recipients for the given distribution list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.IBroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,Serilog.ILogger,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Sends a message to the given broadcast list
+            </summary>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <param name="listName"></param>
+            <param name="content">Message to be sent</param>
+            <param name="id"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Bucket.BucketService">
+            <summary>
+            Allows the storage of documents in the server on an isolated chatbot's container
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            Creates an instance of the BucketService using a BLiP Client
+            </summary>
+            <param name="sender">ISender instance, from BlipHttpClientFactory</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.#ctor(System.String)">
+            <summary>
+            Creates a BucketService instance using a given authKey.
+            </summary>
+            <param name="authKey">Bot authorization key</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.GetAsync``1(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets a document from the bucket using the given <paramref name="id"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Document</c> of the sub-type set on <c>T</c></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.GetIdsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Gets the bucket documents IDs from index <paramref name="skip"/> to <paramref name="take"/>
+            </summary>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <param name="cancellationToken"></param>
+            <returns>A <c>DocumentCollection</c> of the recovered IDs</returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.SetAsync``1(System.String,``0,System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Stores a <paramref name="document"/> on the bucket
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="document"></param>
+            <param name="expiration"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.DeleteAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Deletes the document with the given <paramref name="id"/> from the Bucket
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.GetAsync``1(System.String,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Gets a document from the bucket using the given <paramref name="id"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Document</c> of the sub-type set on <c>T</c></returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting <c>Document</c> from the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.SetAsync``1(System.String,``0,Serilog.ILogger,System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Stores a <paramref name="document"/> on the bucket
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="document"></param>
+            <param name="logger"></param>
+            <param name="expiration"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting <c>Document</c> on the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.DeleteAsync(System.String,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Deletes the document with the given <paramref name="id"/> from the Bucket
+            </summary>
+            <param name="id"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting <c>Document</c> from the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Bucket.IBucketService">
+            <summary>
+            Allows the storage of documents in the server on an isolated chatbot's container
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.IBucketService.GetAsync``1(System.String,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Gets a document from the bucket using the given <paramref name="id"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Document</c> of the sub-type set on <c>T</c></returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting <c>Document</c> from the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.IBucketService.SetAsync``1(System.String,``0,Serilog.ILogger,System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Stores a <paramref name="document"/> on the bucket
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="id"></param>
+            <param name="document"></param>
+            <param name="logger"></param>
+            <param name="expiration"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting <c>Document</c> on the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Bucket.IBucketService.DeleteAsync(System.String,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Deletes the document with the given <paramref name="id"/> from the Bucket
+            </summary>
+            <param name="id"></param>
+            <param name="logger"></param>
+            <param name="cancellationToken"></param>
+            <returns>Lime <c>Command</c> response object</returns>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting <c>Document</c> from the Bucket</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="T:Blip.HttpClient.Services.Contacts.ContactService">
             <summary>
             Http Abstraction of BLiP's /contact URI
             </summary>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.#ctor(Take.Blip.Client.ISender)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.#ctor(Take.Blip.Client.ISender)">
             <summary>
             Creates a ContactService instance using a BLiP client
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.#ctor(System.String)">
             <summary>
             Creates a ContactService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
             Deletes a contact from the bot's agenda
             </summary>
@@ -310,7 +520,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Deletes a contact from the bot's agenda
             </summary>
@@ -321,7 +531,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
             Gets the Bot's Contact using the <paramref name="identity"/> param
             </summary>
@@ -329,7 +539,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Gets the Bot's Contact using the <paramref name="identity"/> param
             </summary>
@@ -345,7 +555,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
             <summary>
             Updates the identity's contact with the new information, keeping any unchanged old data
             </summary>
@@ -354,7 +564,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Merges the <paramref name="contact"/> with the existing one on the Bot's agenda
             </summary>
@@ -366,7 +576,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure merging the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.SetAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.SetAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken)">
             <summary>
             Sets the <paramref name="contact"/> on the Bot's agenda
             </summary>
@@ -379,7 +589,7 @@
             </code>
             </example>
         </member>
-        <member name="M:Blip.HttpClient.Services.ContactService.SetAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.SetAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Sets the <paramref name="contact"/> on the Bot's agenda
             </summary>
@@ -395,89 +605,12 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="T:Blip.HttpClient.Services.IBroadcastService">
-            <summary>
-            Service responsible for managing broadcast lists and sending messages to them
-            </summary>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
-            <summary>
-            Adds a recipient to a broadcast list based on the recipient's identity and the list's name
-            </summary>
-            <param name="listName"></param>
-            <param name="recipientIdentity"></param>
-            <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <returns>Lime <c>Command</c> response object</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure Adding identity to the broadcast list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.CreateDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
-            <summary>
-            Creates a distribution list using the given name. The <param nameref="listName"/> should ideally have the bot's <c>Identifier</c> as a prefix
-            </summary>
-            <param name="listName"></param>
-            <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <returns>Lime <c>Command</c> response object</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure creating broadcast list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.DeleteDistributionListAsync(System.String,System.Threading.CancellationToken,Serilog.ILogger)">
-            <summary>
-            Delete a distribution list using the given <paramref name="listName"/>.
-            </summary>
-            <param name="listName"></param>
-            <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <returns>Lime <c>Command</c> response object</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure deleting broadcast list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.DeleteRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
-            <summary>
-            Removes given <paramref name="recipientIdentity"/> from the broadcast list with the name <paramref name="listName"/>
-            </summary>
-            <param name="listName"></param>
-            <param name="recipientIdentity"></param>
-            <param name="cancellationToken"></param>
-            <param name="logger"></param>
-            <returns>Lime <c>Command</c> response object</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure removing user from distribution list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.GetRecipientsAsync(Serilog.ILogger,System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
-            <summary>
-            Returns a list of recipients for the list with the name <paramref name="listName"/>
-            </summary>
-            <param name="listName"></param>
-            <param name="skip">Recipients to skip from the start</param>
-            <param name="take">Amount of recipients to get</param>
-            <param name="logger"></param>
-            <param name="cancellationToken"></param>
-            <returns>DocumentCollection with the items being the recovered recipients</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting recipients for the given distribution list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="M:Blip.HttpClient.Services.IBroadcastService.SendMessageAsync(System.String,Lime.Protocol.Document,Serilog.ILogger,System.String,System.Threading.CancellationToken)">
-            <summary>
-            Sends a message to the given broadcast list
-            </summary>
-            <param name="logger"></param>
-            <param name="cancellationToken"></param>
-            <param name="listName"></param>
-            <param name="content">Message to be sent</param>
-            <param name="id"></param>
-            <returns>Lime <c>Command</c> response object</returns>
-            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
-            <exception cref="T:System.Exception">Unknown error</exception>
-        </member>
-        <member name="T:Blip.HttpClient.Services.IContactService">
+        <member name="T:Blip.HttpClient.Services.Contacts.IContactService">
             <summary>
             Http Abstraction of BLiP's /contact URI
             </summary>
         </member>
-        <member name="M:Blip.HttpClient.Services.IContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.IContactService.GetAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Gets the Bot's Contact using the <paramref name="identity"/> param
             </summary>
@@ -493,7 +626,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.IContactService.SetAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.IContactService.SetAsync(Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Sets the <paramref name="contact"/> on the Bot's agenda
             </summary>
@@ -509,7 +642,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.IContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.IContactService.MergeAsync(Lime.Protocol.Identity,Lime.Messaging.Resources.Contact,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Merges the <paramref name="contact"/> with the existing one on the Bot's agenda
             </summary>
@@ -521,7 +654,7 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
-        <member name="M:Blip.HttpClient.Services.IContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
+        <member name="M:Blip.HttpClient.Services.Contacts.IContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken,Serilog.ILogger)">
             <summary>
             Deletes the <paramref name="identity"/> contact from the Bot's BLiP Agenda
             </summary>
