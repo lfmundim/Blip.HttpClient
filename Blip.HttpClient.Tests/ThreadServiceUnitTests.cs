@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Blip.HttpClient.Exceptions;
+﻿using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
-using Blip.HttpClient.Services.Bucket;
 using Blip.HttpClient.Services.Threads;
 using FluentAssertions.Common;
-using Lime.Messaging.Resources;
 using Lime.Protocol;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Serilog;
 using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Take.Blip.Client;
 using Takenet.Iris.Messaging.Resources;
 using Xunit;
@@ -141,7 +138,7 @@ namespace Blip.HttpClient.Tests
                 },
                 Resource = new DocumentCollection
                 {
-                    Items = new[]
+                    Items = new Document[]
                     {
                         new ThreadMessage(),
                         new ThreadMessage()
