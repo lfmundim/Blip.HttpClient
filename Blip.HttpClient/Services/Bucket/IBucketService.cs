@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Blip.HttpClient.Exceptions;
+﻿using Blip.HttpClient.Exceptions;
 using Lime.Protocol;
 using Serilog;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Take.Blip.Client.Extensions.Bucket;
 
 namespace Blip.HttpClient.Services.Bucket
