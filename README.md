@@ -22,7 +22,7 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 ### Roadmap 
 * `IContactExtension` ✅ (v2.0.0)
 * `IBroadcastExtension` ✅ (v2.1.0)
-* `IBucketExtension` 
+* `IBucketExtension` ✅ (unreleased)
 * Chat History Service (`/threads`)
 * `IEventTrackExtension`
 * `IResourceExtension`
