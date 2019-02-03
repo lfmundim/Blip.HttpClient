@@ -665,6 +665,195 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure setting the contact</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
+        <member name="T:Blip.HttpClient.Services.EventTracker.EventTrackService">
+            <summary>
+            Service responsible for managing trackings
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            Creates an instance of the EventTrackService using a BLiP Client
+            </summary>
+            <param name="sender">ISender instance, from BlipHttpClientFactory</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.#ctor(System.String)">
+            <summary>
+            Creates a EventTrackService instance using a given authKey.
+            </summary>
+            <param name="authKey">Bot authorization key</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Threading.CancellationToken,Lime.Protocol.Identity)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="extras">Extra information about the events</param>
+            <param name="cancellationToken"></param>
+            <param name="identity">The contact associated with this event</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.Collections.Generic.IDictionary{System.String,System.String},System.Threading.CancellationToken,Lime.Protocol.Identity)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="cancellationToken"></param>
+            <param name="identity">The identity of contact associated to the event</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,System.String,Lime.Protocol.Message,Lime.Messaging.Resources.Contact,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category"></param>
+            <param name="action"></param>
+            <param name="label"></param>
+            <param name="message"></param>
+            <param name="contact"></param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras"></param>
+            <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.String,Lime.Protocol.Message,Lime.Messaging.Resources.Contact,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="label"></param>
+            <param name="message"></param>
+            <param name="contact">The contact associated to the event</param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category"></param>
+            <param name="action"></param>
+            <param name="label"></param>
+            <param name="messageId"></param>
+            <param name="contactIdentity"></param>
+            <param name="contactSource"></param>
+            <param name="contactGroup"></param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras"></param>
+            <param name="fireAndForget"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="label"></param>
+            <param name="messageId"></param>
+            <param name="contactIdentity">The identy of the contact associated to the event</param>
+            <param name="contactSource"></param>
+            <param name="contactGroup"></param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.GetAllAsync(System.DateTimeOffset,System.DateTimeOffset,System.String,System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get all trackings of some category and action in a period of time
+            </summary>
+            <param name="startDate"></param>
+            <param name="endDate"></param>
+            <param name="category"></param>
+            <param name="action"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <param name="cancellationToken"></param>
+            <returns><c>DocumentCollection</c> response object</returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.GetCategoriesAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get all trackings categories
+            </summary>
+            <param name="take"></param>
+            <param name="cancellationToken"></param>
+            <returns><c>DocumentCollection</c></returns>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.GetCategoryActionsCounterAsync(System.DateTimeOffset,System.DateTimeOffset,System.String,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get all actions for a tracking category
+            </summary>
+            <param name="startDate"></param>
+            <param name="endDate"></param>
+            <param name="category"></param>
+            <param name="take"></param>
+            <param name="cancellationToken"></param>
+            <returns><c>DocumentCollection</c></returns>
+        </member>
+        <member name="T:Blip.HttpClient.Services.EventTracker.IEventTrackService">
+            <summary>
+            Service responsible for managing trackings
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.IEventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.Collections.Generic.IDictionary{System.String,System.String},System.Threading.CancellationToken,Lime.Protocol.Identity)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="cancellationToken"></param>
+            <param name="identity">The identity of contact associated to the event</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.IEventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.String,Lime.Protocol.Message,Lime.Messaging.Resources.Contact,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="label"></param>
+            <param name="message"></param>
+            <param name="contact">The contact associated to the event</param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.EventTracker.IEventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Add a tracking to AnalyticsAddress: postmaster@analytics.msging.net
+            </summary>
+            <param name="category">Category to aggregate the related events</param>
+            <param name="action">The action associated to the event</param>
+            <param name="logger"></param>
+            <param name="label"></param>
+            <param name="messageId"></param>
+            <param name="contactIdentity">The identy of the contact associated to the event</param>
+            <param name="contactSource"></param>
+            <param name="contactGroup"></param>
+            <param name="contactExternalId"></param>
+            <param name="value"></param>
+            <param name="extras">Extra information about the events</param>
+            <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
+            <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
+            <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
         <member name="T:Blip.HttpClient.Services.Threads.Enumerations">
             <summary>
             Enumerations used on Threads service
