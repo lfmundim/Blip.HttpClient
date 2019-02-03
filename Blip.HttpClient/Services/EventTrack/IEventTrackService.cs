@@ -50,7 +50,7 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="logger"></param>
         /// <param name="label"></param>
         /// <param name="messageId"></param>
-        /// <param name="contactIdentity">The identy of the contact associated to the event</param>
+        /// <param name="contactIdentity">The identity of the contact associated to the event</param>
         /// <param name="contactSource"></param>
         /// <param name="contactGroup"></param>
         /// <param name="contactExternalId"></param>
