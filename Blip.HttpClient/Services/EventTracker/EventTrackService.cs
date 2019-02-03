@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System;   
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,7 +105,7 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="cancellationToken"></param>
         public async Task<Command> AddAsync(string category, string action, ILogger logger, string label = null, Message message = null, Contact contact = null, string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await AddAsync(category, action, logger, contactIdentity: contact?.Identity, extras: extras, cancellationToken: cancellationToken);
+            return await AddAsync(category, action, logger, label, message?.Id, contact?.Identity, contact?.Source ?? message?.From?.Instance, contact?.Group, contactExternalId, value, extras, fireAndForget, cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="logger"></param>
         /// <param name="label"></param>
         /// <param name="messageId"></param>
-        /// <param name="contactIdentity">The identy of the contact associated to the event</param>
+        /// <param name="contactIdentity">The identity of the contact associated to the event</param>
         /// <param name="contactSource"></param>
         /// <param name="contactGroup"></param>
         /// <param name="contactExternalId"></param>
@@ -173,7 +173,15 @@ namespace Blip.HttpClient.Services.EventTracker
                 if (fireAndForget)
                 {
                     command.Method = CommandMethod.Observe;
-                    return await _sender.ProcessCommandAsync(command, cancellationToken);
+                    _sender.SendCommandAsync(command, cancellationToken);
+                    return new Command()
+                    {
+                        Status = CommandStatus.Success,
+                        Reason = new Reason()
+                        {
+                            Description = "Observe command sent"
+                        }
+                    };
                 }
 
                 command.Method = CommandMethod.Set;

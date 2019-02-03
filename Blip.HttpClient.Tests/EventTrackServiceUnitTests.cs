@@ -44,13 +44,13 @@ namespace Blip.HttpClient.Tests
             Command addResponse;
             Identity identity = Identity.Parse(RecipientIdentity);
 
-            if (authKey == "")
-            {
-                addResponse = await _eventTrackService.AddAsync(Category, Action, _logger, identity: identity);
-            }
-            else if (fireAndForget)
+            if (fireAndForget)
             {
                 addResponse = await _eventTrackService.AddAsync(Category, Action, _logger, contact: contact, fireAndForget: fireAndForget);
+            }
+            else if (authKey == "")
+            {
+                addResponse = await _eventTrackService.AddAsync(Category, Action, _logger, identity: identity);
             }
             else
             {
