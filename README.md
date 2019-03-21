@@ -1,44 +1,29 @@
 # Blip.HttpClient [![Build status](https://ci.appveyor.com/api/projects/status/xg52i4obk27h92g9/branch/master?svg=true)](https://ci.appveyor.com/project/lfmundim/blip-httpclient/branch/master) [![codecov](https://codecov.io/gh/lfmundim/Blip.HttpClient/branch/master/graph/badge.svg)](https://codecov.io/gh/lfmundim/Blip.HttpClient) [![Nuget](https://img.shields.io/nuget/v/Blip.Httpclient.svg)](https://www.nuget.org/packages/blip.httpclient) [![NugetDownloads](https://img.shields.io/nuget/dt/blip.httpclient.svg?style=popout)](https://www.nuget.org/packages/blip.httpclient)
 Take.BLiP.Client implementation to use Http calls instead of instantiating an actual client.
 
-Full documentation of supported methods can be found [here](https://docs.blip.ai)
+Full documentation of supported methods can be found [here](https://docs.blip.ai), to be sent using the `ProcessCommandAsync`, `SendMessageAsync` and `SendNotificationAsync` by building the `Command` using the given Http Structure.
 
-# Methods
-## `ProcessCommandAsync`
-Sends a LIME Command to the `/commands` endpoint and receives another LIME Command response with the fetched data. Examples below.
+---
 
-HTTP:
-```http
-POST https://msging.net/commands HTTP/1.1
-Content-Type: application/json
-Authorization: Key {YOUR_TOKEN}
+## Extra Services
+Alongside with the simple `HttpClient`, this package provides you with implementations of BLiP's own extensions, such as the `IContactExtension`, with *overloads* for every method adding the support for *Serilog's* `ILogger` logging interface to enrich your debugging and logging experience.
 
-{  
-  "id": "2",
-  "method": "get",
-  "uri": "/contacts"
-}
-```
-
-CSharp (Using this package):
+Note that the logging structure (as of the `2.0.0` release) is set to use `Seq`s synthax:
 ```csharp
-// {...}
-    var factory = new BlipHttpClientFactory();
-        _client = factory.BuildBlipHttpClient("{YOUR_TOKEN}");
-        var command = new Command
-        {
-            Method = CommandMethod.Get,
-            Uri = new LimeUri(commandSuffix)
-        };
-        var resp = await _client.ProcessCommandAsync(command, CancellationToken.None);
-// {...}
+logger.Information("[DeleteContact] Trying delete contact using {@identity}", identity);
 ```
-> Gets all contacts from a Bot's contact list
 
-## `SendCommandAsync`
-Sends a LIME Command to the `/commands` endpoint without expecting any return.
+### Currently available services
+|   BLiP              | Package           |
+|:-------------------:|:-----------------:|
+| `IContactExtension` | `IContactService` |
 
-## `SendMessageAsync`
-Sends a message to a set user on behalf of the Bot.
+### Roadmap 
+* `IBroadcastExtension`
+* `IBucketExtension` 
+* Chat History Service (`/threads`)
+* `IEventTrackExtension`
+* `IResourceExtension`
+* `ISchedulerExtension`
 
-## `SendNotificationAsync`
+Note that these are the Extensions BLiP provides that I am currently working on implementing with Logs. There are a few others not planned, but they may become available later.
