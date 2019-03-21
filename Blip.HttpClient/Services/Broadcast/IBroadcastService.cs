@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Take.Blip.Client.Extensions.Broadcast;
 
-namespace Blip.HttpClient.Services
+namespace Blip.HttpClient.Services.Broadcast
 {
     /// <summary>
     /// Service responsible for managing broadcast lists and sending messages to them

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions.Contacts;
 
-namespace Blip.HttpClient.Services
+namespace Blip.HttpClient.Services.Contacts
 {
     /// <summary>
     /// Http Abstraction of BLiP's /contact URI

@@ -10,6 +10,7 @@ using Shouldly;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Blip.HttpClient.Services.Contacts;
 using Take.Blip.Client;
 using Xunit;
 
