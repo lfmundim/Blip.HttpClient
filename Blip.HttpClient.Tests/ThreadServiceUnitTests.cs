@@ -22,7 +22,7 @@ namespace Blip.HttpClient.Tests
     {
         private readonly IThreadService _threadService;
         private readonly ILogger _logger;
-        private const string IdentityString = "b294323a-149f-4de6-9cba-d41ca914e268.testingbots@0mn.io";
+        private const string IdentityString = "a5ca8a7c-32db-4a80-8f03-3cd36131924c.testingbots@0mn.io";
 
         public ThreadServiceUnitTests()
         {
