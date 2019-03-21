@@ -4,12 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Lucas Mundim, Andre Minelli</Authors>
     <Company>Take</Company>
-    <Description>Take.BLiP.Client implementation to use Http calls instead of instantiating an actual client</Description>
+    <Description>Take.BLiP.Client implementation to use Http calls instead of TCP</Description>
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>2.0.0</Version>
-    <PackageReleaseNotes>Full revamp of the ContactService to overload every method on BLiP's ContactExtension to enable logging on them but also serve as a regular IContactExtension if needed;</PackageReleaseNotes>
+    <Version>2.1.0</Version>
+    <PackageReleaseNotes>Implementation of IBroadcastService, to overload most of BLiP's IBroadcastExtension methods to add meaningful logs</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
