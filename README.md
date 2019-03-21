@@ -20,6 +20,7 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 | `IBroadcastExtension` | `IBroadcastService` |
 | `IBucketExtension`    | `IBucketService`    |
 | --------------------- | `IThreadService`    |
+| `IEventTrackExtension`| `IEventTrackService`|
 
 ### Roadmap 
 * `IContactExtension` ✅ (v2.0.0)
