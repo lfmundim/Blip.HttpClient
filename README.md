@@ -26,8 +26,11 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 * `IBroadcastExtension` ✅ (v2.1.0)
 * `IBucketExtension` ✅ (v2.2.0)
 * Chat History Service (`/threads`) ✅ (v2.2.0)
-* `IEventTrackExtension`
+* `IEventTrackExtension`✅ (v2.3.0)
 * `IResourceExtension`
 * `ISchedulerExtension`
 
 Note that these are the Extensions BLiP provides that I am currently working on implementing with Logs. There are a few others not planned, but they may become available later.
+
+### Issues
+* #2 ✅ (v2.3.0)
