@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using Blip.HttpClient.Factories;
 using Lime.Protocol;
 using Serilog;
 using Take.Blip.Client;
+using Take.Blip.Client.Extensions.Resource;
 using Takenet.Iris.Messaging.Contents;
 
 namespace Blip.HttpClient.Services.Resources
@@ -33,7 +36,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <param name="cancellationToken"></param>
         public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var resourceExtension = new ResourceService(_sender);
+            var resourceExtension = new ResourceExtension(_sender);
             await resourceExtension.DeleteAsync(id, cancellationToken);
         }
 
@@ -84,7 +87,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <returns>Recovered resource of type <c>T</c></returns>
         public async Task<T> GetAsync<T>(string id, CancellationToken cancellationToken = default(CancellationToken)) where T : Document
         {
-            var resourceExtension = new ResourceService(_sender);
+            var resourceExtension = new ResourceExtension(_sender);
             var resource = await resourceExtension.GetAsync<T>(id, cancellationToken).ConfigureAwait(false);
             return resource;
         }
@@ -130,6 +133,50 @@ namespace Blip.HttpClient.Services.Resources
         }
 
         /// <summary>
+        /// Get resources of type <c>T</c> from BLiP. Note: might not work if your bot is on a free plan due to throughput limitations.
+        /// </summary>
+        /// <typeparam name="T">Type of the document to be recovered</typeparam>
+        /// <param name="logger"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="skip">How many resources to skip from index 0</param>
+        /// <param name="take">How many resources to return</param>
+        /// <returns><c>List<T></c> containing the recovered resources</returns>
+        public async Task<ConcurrentDictionary<string, Document>> GetAllAsync(int take = 100, int skip = 0, ILogger logger = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            try
+            {
+                DocumentCollection ids;
+                var resources = new ConcurrentDictionary<string, Document>();
+
+                if (logger != null)
+                    ids = await GetIdsAsync(logger, skip, take, cancellationToken);
+                else
+                    ids = await GetIdsAsync(skip, take, cancellationToken);
+
+                var tasks = ids.Items.AsParallel().Select(async x =>
+                {
+                    var key = x.ToString();
+                    var value = await GetAsync<Document>(key).ConfigureAwait(false);
+                    resources.TryAdd(key, value);
+                });
+
+                await Task.WhenAll(tasks);
+
+                return resources;
+            }
+            catch (BlipHttpClientException bex)
+            {
+                logger?.Error(bex, "[GetResource] Failed to get resources");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                logger?.Error(ex, "[GetResource] Failed to get resources");
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Recovers a given number of Resource IDs 
         /// </summary>
         /// <param name="skip"></param>
@@ -138,7 +185,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <returns><c>DocumentCollection</c> with the resource IDs recovered</returns>
         public async Task<DocumentCollection> GetIdsAsync(int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var resourceExtension = new ResourceService(_sender);
+            var resourceExtension = new ResourceExtension(_sender);
             var resource = await resourceExtension.GetIdsAsync(skip, take, cancellationToken).ConfigureAwait(false);
             return resource;
         }
@@ -193,7 +240,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <param name="cancellationToken"></param>
         public async Task SetAsync<T>(string id, T document, TimeSpan expiration = default(TimeSpan), CancellationToken cancellationToken = default(CancellationToken)) where T : Document
         {
-            var resourceExtension = new ResourceService(_sender);
+            var resourceExtension = new ResourceExtension(_sender);
             await resourceExtension.SetAsync<T>(id, document, expiration, cancellationToken).ConfigureAwait(false);
         }
 
