@@ -21,6 +21,7 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 | `IBucketExtension`    | `IBucketService`    |
 | --------------------- | `IThreadService`    |
 | `IEventTrackExtension`| `IEventTrackService`|
+| `IResourceExtension`  | `IResourceService`  |
 
 ### Roadmap 
 * `IContactExtension` ✅ (v2.0.0)
@@ -28,7 +29,7 @@ logger.Information("[DeleteContact] Trying delete contact using {@identity}", id
 * `IBucketExtension` ✅ (v2.2.0)
 * Chat History Service (`/threads`) ✅ (v2.2.0)
 * `IEventTrackExtension`✅ (v2.3.0) - PR by @[matheus-almeida-rosa](https://github.com/matheus-almeida-rosa)
-* `IResourceExtension`
+* `IResourceExtension`✅ (v2.4.0)
 * `ISchedulerExtension`
 
 Note that these are the Extensions BLiP provides that I am currently working on implementing with Logs. There are a few others not planned, but they may become available later.
