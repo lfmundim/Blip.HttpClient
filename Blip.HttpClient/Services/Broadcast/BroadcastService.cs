@@ -327,6 +327,13 @@ namespace Blip.HttpClient.Services.Broadcast
             }
         }
 
+        /// <summary>
+        /// Returns a given number <paramref name="take"/> (with a <paramref name="skip"/> offset) of recipients
+        /// </summary>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<DocumentCollection> GetRecipientsAsynGetAllDistributionListsAsync(int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken))
         {
             var broadcastExtension = new BroadcastExtension(_sender);

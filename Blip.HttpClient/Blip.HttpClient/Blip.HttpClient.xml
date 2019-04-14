@@ -50,6 +50,11 @@
             <param name="documentList"></param>
             <returns></returns>
         </member>
+        <member name="T:Blip.HttpClient.Factories.BlipHttpClientFactory">
+            <summary>
+            Factory that allows the creation of a BlipClient that uses Http
+            </summary>
+        </member>
         <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildServiceCollection(System.String,System.Collections.Generic.List{Lime.Protocol.Document},Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Creates or updates a Service Collection to include BLiP's extensions and any custom Documents
@@ -854,6 +859,23 @@
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
         </member>
+        <member name="T:Blip.HttpClient.Services.Resources.ResourceService">
+            <summary>
+            Allows the storage of documents in the server in an isolated space for each chatbot
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Resources.ResourceService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            ResourceService builder using an already instantiated <paramref name="sender"/>
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Resources.ResourceService.#ctor(System.String)">
+            <summary>
+            ResourceService builder using a given <paramref name="authKey"/> to instantiate the sender on demand
+            </summary>
+            <param name="authKey"></param>
+        </member>
         <member name="M:Blip.HttpClient.Services.Resources.ResourceService.DeleteAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Deletes the resource with the given <paramref name="id"/>
@@ -925,6 +947,7 @@
             <typeparam name="T"></typeparam>
             <param name="id"></param>
             <param name="document"></param>
+            <param name="logger"></param>
             <param name="expiration"></param>
             <param name="cancellationToken"></param>
             <returns><c>Command</c> with BLiP's response</returns>

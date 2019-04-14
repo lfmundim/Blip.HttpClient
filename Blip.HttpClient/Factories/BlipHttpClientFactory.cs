@@ -12,6 +12,9 @@ using Take.Blip.Client.Extensions;
 
 namespace Blip.HttpClient.Factories
 {
+    /// <summary>
+    /// Factory that allows the creation of a BlipClient that uses Http
+    /// </summary>
     public class BlipHttpClientFactory
     {
         /// <summary>
@@ -81,6 +84,10 @@ namespace Blip.HttpClient.Factories
         /// <returns></returns>
         public ISender BuildBlipHttpClient(string authKey)
         {
+            if(authKey.StartsWith("Key "))
+            {
+                authKey = authKey.Replace("Key ", "");
+            }
             var documentResolver = new DocumentTypeResolver();
             documentResolver.WithBlipDocuments();
 

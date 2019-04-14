@@ -5,10 +5,17 @@ using Take.Blip.Client;
 
 namespace Blip.HttpClient.Services
 {
+    /// <summary>
+    /// BLiP ISender implementation that uses Http calls instead of Tcp
+    /// </summary>
     public class BlipHttpClient : ISender
     {
         private readonly IBlipHttpClient _blipHttpClient;
 
+        /// <summary>
+        /// Base ctor using a given http client
+        /// </summary>
+        /// <param name="blipHttpClient"></param>
         public BlipHttpClient(IBlipHttpClient blipHttpClient)
         {
             _blipHttpClient = blipHttpClient;

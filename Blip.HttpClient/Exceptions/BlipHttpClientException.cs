@@ -6,6 +6,9 @@ using Takenet.Iris.Messaging.Contents;
 
 namespace Blip.HttpClient.Exceptions
 {
+    /// <summary>
+    /// Exception thrown when the response status from BLiP is not Success
+    /// </summary>
     public class BlipHttpClientException : Exception
     {
         /// <summary>
@@ -29,11 +32,20 @@ namespace Blip.HttpClient.Exceptions
         /// </summary>
         public Document Resource { get; set; }
 
+        /// <summary>
+        /// Constructor to propagate a given <paramref name="message"/> in the exception
+        /// </summary>
+        /// <param name="message"></param>
         public BlipHttpClientException(string message)
         {
             _message = message;
         }
 
+        /// <summary>
+        /// Constructor to propagate a <paramref name="message"/> and a <paramref name="command"/>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="command"></param>
         public BlipHttpClientException(string message, Command command)
         {
             _message = message;
@@ -43,6 +55,25 @@ namespace Blip.HttpClient.Exceptions
             Resource = command.Resource;
         }
 
+        /// <summary>
+        /// Base default ctor
+        /// </summary>
+        public BlipHttpClientException() : base()
+        {
+        }
+
+        /// <summary>
+        /// Base ctor propagating a given <paramref name="message"/> and a possible <paramref name="innerException"/>
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+        public BlipHttpClientException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        /// <summary>
+        /// Exception message
+        /// </summary>
         public override string Message
         {
             get { return _message; }

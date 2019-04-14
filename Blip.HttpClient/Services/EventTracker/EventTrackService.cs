@@ -83,7 +83,10 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="extras"></param>
         /// <param name="fireAndForget"></param>
         /// <param name="cancellationToken"></param>
-        public async Task AddAsync(string category, string action, string label = null, Message message = null, Contact contact = null, string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AddAsync(string category, string action, string label = null, 
+                                   Message message = null, Contact contact = null, string contactExternalId = null, 
+                                   decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, 
+                                   CancellationToken cancellationToken = default(CancellationToken))
         {
             var eventTrackExtension = new EventTrackExtension(_sender);
             await eventTrackExtension.AddAsync(category, action, label, message, contact, contactExternalId, value, extras, fireAndForget, cancellationToken);
@@ -103,7 +106,10 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="extras">Extra information about the events</param>
         /// <param name="fireAndForget"></param>
         /// <param name="cancellationToken"></param>
-        public async Task<Command> AddAsync(string category, string action, ILogger logger, string label = null, Message message = null, Contact contact = null, string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Command> AddAsync(string category, string action, ILogger logger, 
+                                            string label = null, Message message = null, Contact contact = null, 
+                                            string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, 
+                                            bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await AddAsync(category, action, logger, label, message?.Id, contact?.Identity, contact?.Source ?? message?.From?.Instance, contact?.Group, contactExternalId, value, extras, fireAndForget, cancellationToken);
         }
@@ -122,7 +128,11 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="value"></param>
         /// <param name="extras"></param>
         /// <param name="fireAndForget"></param>
-        public async Task AddAsync(string category, string action, string label = null, string messageId = null, string contactIdentity = null, string contactSource = null, string contactGroup = null, string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name="cancellationToken"></param>
+        public async Task AddAsync(string category, string action, string label = null, 
+                                   string messageId = null, string contactIdentity = null, string contactSource = null, 
+                                   string contactGroup = null, string contactExternalId = null, decimal? value = null, 
+                                   IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var eventTrackExtension = new EventTrackExtension(_sender);
             await eventTrackExtension.AddAsync(category, action, label, messageId, contactIdentity, contactSource, contactGroup, contactExternalId, value, extras, fireAndForget, cancellationToken);
@@ -146,7 +156,11 @@ namespace Blip.HttpClient.Services.EventTracker
         /// <param name="cancellationToken"></param>
         /// <exception cref="BlipHttpClientException">Failure sending message to distribution list</exception>
         /// <exception cref="Exception">Unknown error</exception>
-        public async Task<Command> AddAsync(string category, string action, ILogger logger, string label = null, string messageId = null, string contactIdentity = null, string contactSource = null, string contactGroup = null, string contactExternalId = null, decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Command> AddAsync(string category, string action, ILogger logger, 
+                                            string label = null, string messageId = null, string contactIdentity = null, 
+                                            string contactSource = null, string contactGroup = null, string contactExternalId = null, 
+                                            decimal? value = null, IDictionary<string, string> extras = null, bool fireAndForget = false, 
+                                            CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
