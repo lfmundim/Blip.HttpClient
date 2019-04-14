@@ -19,7 +19,5 @@ namespace Blip.HttpClient.Services.Resources
         Task<DocumentCollection> GetIdsAsync(ILogger logger, int skip = 0, int take = 100, CancellationToken cancellationToken = default(CancellationToken));
 
         Task<Command> SetAsync<T>(string id, T document, ILogger logger, TimeSpan expiration = default(TimeSpan), CancellationToken cancellationToken = default(CancellationToken)) where T : Document;
-
-        Task<ConcurrentDictionary<string, Document>> GetAllAsync(int take = 100, int skip = 0, ILogger logger = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

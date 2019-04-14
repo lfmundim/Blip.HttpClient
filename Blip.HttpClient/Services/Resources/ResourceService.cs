@@ -133,50 +133,6 @@ namespace Blip.HttpClient.Services.Resources
         }
 
         /// <summary>
-        /// Get resources of type <c>T</c> from BLiP. Note: might not work if your bot is on a free plan due to throughput limitations.
-        /// </summary>
-        /// <typeparam name="T">Type of the document to be recovered</typeparam>
-        /// <param name="logger"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="skip">How many resources to skip from index 0</param>
-        /// <param name="take">How many resources to return</param>
-        /// <returns><c>List<T></c> containing the recovered resources</returns>
-        public async Task<ConcurrentDictionary<string, Document>> GetAllAsync(int take = 100, int skip = 0, ILogger logger = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            try
-            {
-                DocumentCollection ids;
-                var resources = new ConcurrentDictionary<string, Document>();
-
-                if (logger != null)
-                    ids = await GetIdsAsync(logger, skip, take, cancellationToken);
-                else
-                    ids = await GetIdsAsync(skip, take, cancellationToken);
-
-                var tasks = ids.Items.AsParallel().Select(async x =>
-                {
-                    var key = x.ToString();
-                    var value = await GetAsync<Document>(key).ConfigureAwait(false);
-                    resources.TryAdd(key, value);
-                });
-
-                await Task.WhenAll(tasks);
-
-                return resources;
-            }
-            catch (BlipHttpClientException bex)
-            {
-                logger?.Error(bex, "[GetResource] Failed to get resources");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                logger?.Error(ex, "[GetResource] Failed to get resources");
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Recovers a given number of Resource IDs 
         /// </summary>
         /// <param name="skip"></param>
