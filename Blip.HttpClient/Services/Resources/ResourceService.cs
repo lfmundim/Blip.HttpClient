@@ -15,14 +15,25 @@ using Takenet.Iris.Messaging.Contents;
 
 namespace Blip.HttpClient.Services.Resources
 {
+    /// <summary>
+    /// Allows the storage of documents in the server in an isolated space for each chatbot
+    /// </summary>
     public class ResourceService : IResourceService
     {
         private readonly ISender _sender;
+        /// <summary>
+        /// ResourceService builder using an already instantiated <paramref name="sender"/>
+        /// </summary>
+        /// <param name="sender"></param>
         public ResourceService(ISender sender)
         {
             _sender = sender;
         }
 
+        /// <summary>
+        /// ResourceService builder using a given <paramref name="authKey"/> to instantiate the sender on demand
+        /// </summary>
+        /// <param name="authKey"></param>
         public ResourceService(string authKey)
         {
             var factory = new BlipHttpClientFactory();
@@ -206,6 +217,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <typeparam name="T"></typeparam>
         /// <param name="id"></param>
         /// <param name="document"></param>
+        /// <param name="logger"></param>
         /// <param name="expiration"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><c>Command</c> with BLiP's response</returns>
@@ -226,7 +238,7 @@ namespace Blip.HttpClient.Services.Resources
                     throw new BlipHttpClientException("Failed to set resource on BLiP", resourceResponse);
                 }
 
-                logger?.Information("[SetResource] Successfully set resource with id {@id}");
+                logger?.Information("[SetResource] Successfully set resource with id {@id}", id);
                 return resourceResponse;
             }
             catch (BlipHttpClientException bex)

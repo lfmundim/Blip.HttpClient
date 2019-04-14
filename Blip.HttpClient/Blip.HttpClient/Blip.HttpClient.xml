@@ -889,7 +889,6 @@
             <param name="cancellationToken"></param>
             <returns>Recovered resource of type <c>T</c></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Blip.HttpClient.Services.Resources.ResourceService.GetAllAsync(System.Int32,System.Int32,Serilog.ILogger,System.Threading.CancellationToken)" -->
         <member name="M:Blip.HttpClient.Services.Resources.ResourceService.GetIdsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Recovers a given number of Resource IDs 
