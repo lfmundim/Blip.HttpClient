@@ -15,9 +15,6 @@ namespace Blip.HttpClient.Services.Threads
     /// </summary>
     public interface IThreadService
     {
-        /// <summary>
-        /// Gets the last chatbot's threads. By default, BLiP returns the last 50 threads.
-        /// </summary>
         //Task<Command> GetLastThreadsAsync(); // To be studied and implemented
 
         /// <summary>

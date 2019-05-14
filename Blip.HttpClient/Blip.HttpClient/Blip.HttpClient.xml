@@ -4,6 +4,11 @@
         <name>Blip.HttpClient</name>
     </assembly>
     <members>
+        <member name="T:Blip.HttpClient.Exceptions.BlipHttpClientException">
+            <summary>
+            Exception thrown when the response status from BLiP is not Success
+            </summary>
+        </member>
         <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException._message">
             <summary>
             Exception message
@@ -27,6 +32,36 @@
         <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.Resource">
             <summary>
             Any extra resources returned by the BLiP API
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Exceptions.BlipHttpClientException.#ctor(System.String)">
+            <summary>
+            Constructor to propagate a given <paramref name="message"/> in the exception
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Exceptions.BlipHttpClientException.#ctor(System.String,Lime.Protocol.Command)">
+            <summary>
+            Constructor to propagate a <paramref name="message"/> and a <paramref name="command"/>
+            </summary>
+            <param name="message"></param>
+            <param name="command"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Exceptions.BlipHttpClientException.#ctor">
+            <summary>
+            Base default ctor
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Exceptions.BlipHttpClientException.#ctor(System.String,System.Exception)">
+            <summary>
+            Base ctor propagating a given <paramref name="message"/> and a possible <paramref name="innerException"/>
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="P:Blip.HttpClient.Exceptions.BlipHttpClientException.Message">
+            <summary>
+            Exception message
             </summary>
         </member>
         <member name="T:Blip.HttpClient.Extensions.ServiceCollectionExtensions">
@@ -99,6 +134,175 @@
             <summary>
             Identity.ToString() of the list to be created
             </summary>
+        </member>
+        <member name="T:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService">
+            <summary>
+            allows the creation, training and publication of artificial intelligence models in the providers associated with the chatbot, 
+            besides performing sentence analysis to identify intentions and entities
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.#ctor(Take.Blip.Client.ISender)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService"/> class.
+            </summary>
+            <param name="sender">TCP or HTTP BLiP Client.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.AnalyzeAsync(Takenet.Iris.Messaging.Resources.ArtificialIntelligence.AnalysisRequest,System.Threading.CancellationToken)">
+            <summary>
+            Runs an analysis on a given request using the preferred AI Engine
+            </summary>
+            <returns>AI Engine response</returns>
+            <param name="analysisRequest"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetAnswerAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the answer with the given <paramref name="answerId"/> for the requested <paramref name="intentionId"/>
+            </summary>
+            <returns>The answer object</returns>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="answerId">Answer identifier.</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetAnswersAsync(System.String,System.Int32,System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets the possible answers from the given <paramref name="intentionId"/>
+            </summary>
+            <returns>Possible intention answers.</returns>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="skip">Ammount of answers to skip from the start</param>
+            <param name="take">Ammount of answers to recover</param>
+            <param name="ascending">If set to <c>true</c> the answer order check is ascending.</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetEntitiesAsync(System.Int32,System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets the entities async.
+            </summary>
+            <returns>The entities async.</returns>
+            <param name="skip">Ammount of entities to skip from the start. Default is 0</param>
+            <param name="take">Ammount of entities to recover. Default is 100</param>
+            <param name="ascending">If set to <c>true</c> the entity order check is ascending.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetEntityAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Recovers an Entity with a given <paramref name="id"/>
+            </summary>
+            <returns>The entity</returns>
+            <param name="id">Entity Identifier.</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetIntentionAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Recovers an Intention with a given <paramref name="id"/>
+            </summary>
+            <returns>The intention.</returns>
+            <param name="id">Intention Identifier.</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetIntentionsAsync(System.Int32,System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets <paramref name="take"/> bot's intentions from <paramref name="skip"/>
+            </summary>
+            <returns>The intentions async.</returns>
+            <param name="skip">Intentions to skip from the start. Default is 0</param>
+            <param name="take">Intentions to get from skip. Default is 100.</param>
+            <param name="ascending">If set to <c>true</c> the intention order check is ascending.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetModelsAsync(System.Int32,System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets the previously trained models
+            </summary>
+            <returns>The previous models.</returns>
+            <param name="skip">Models to skip from the start. Default is 0</param>
+            <param name="take">Models to get from skip. Default is 100.</param>
+            <param name="ascending">If set to <c>true</c> the models order check is ascending.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetQuestionAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Recovers a question with a given <paramref name="questionId"/> for the given intention
+            </summary>
+            <returns>The question.</returns>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="questionId">Question identifier.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetQuestionsAsync(System.String,System.Int32,System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets the questions from a given intention.
+            </summary>
+            <returns>The questions.</returns>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="skip">Questions to skip from the start. Default is 0</param>
+            <param name="take">Questions to get from skip. Default is 100.</param>
+            <param name="ascending">If set to <c>true</c> the questions order check is ascending.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.PublishModelAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Publishes the model with id <paramref name="id"/>
+            </summary>
+            <param name="id">Model Identifier.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.SendFeedbackAsync(System.String,Takenet.Iris.Messaging.Resources.ArtificialIntelligence.AnalysisFeedback,System.Threading.CancellationToken)">
+            <summary>
+            Sends an <paramref name="analysisFeedback"/> to a given past <paramref name="analysisId"/>
+            </summary>
+            <param name="analysisId">Analysis identifier.</param>
+            <param name="analysisFeedback">Analysis feedback.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.SetAnswersAsync(System.String,System.Collections.Generic.IEnumerable{Takenet.Iris.Messaging.Resources.ArtificialIntelligence.Answer},System.Threading.CancellationToken)">
+            <summary>
+            Sets the possible <paramref name="answers"/> for a given intention
+            </summary>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="answers">Answers.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.SetEntityAsync(Takenet.Iris.Messaging.Resources.ArtificialIntelligence.Entity,System.Threading.CancellationToken)">
+            <summary>
+            Sets an <paramref name="entity"/>
+            </summary>
+            <param name="entity">Entity.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.SetIntentionAsync(Takenet.Iris.Messaging.Resources.ArtificialIntelligence.Intention,System.Threading.CancellationToken)">
+            <summary>
+            Sets an <paramref name="intention"/>
+            </summary>
+            <param name="intention">Intention.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.SetQuestionsAsync(System.String,System.Collections.Generic.IEnumerable{Takenet.Iris.Messaging.Resources.ArtificialIntelligence.Question},System.Threading.CancellationToken)">
+            <summary>
+            Sets a list of <paramref name="questions"/> for a given intention
+            </summary>
+            <param name="intentionId">Intention identifier.</param>
+            <param name="questions">Questions.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.TrainModelAsync(System.Threading.CancellationToken)">
+            <summary>
+            Trains the currently published model on the bot
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="T:Blip.HttpClient.Services.BlipHttpClient">
+            <summary>
+            BLiP ISender implementation that uses Http calls instead of Tcp
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.BlipHttpClient.#ctor(Blip.HttpClient.Services.IBlipHttpClient)">
+            <summary>
+            Base ctor using a given http client
+            </summary>
+            <param name="blipHttpClient"></param>
         </member>
         <member name="M:Blip.HttpClient.Services.BlipHttpClient.ProcessCommandAsync(Lime.Protocol.Command,System.Threading.CancellationToken)">
             <summary>
@@ -257,6 +461,15 @@
             <returns>DocumentCollection with the items being the recovered recipients</returns>
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure getting recipients for the given distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.GetRecipientsAsynGetAllDistributionListsAsync(System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns a given number <paramref name="take"/> (with a <paramref name="skip"/> offset) of recipients
+            </summary>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.HasRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
@@ -754,6 +967,7 @@
             <param name="value"></param>
             <param name="extras"></param>
             <param name="fireAndForget"></param>
+            <param name="cancellationToken"></param>
         </member>
         <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,Serilog.ILogger,System.String,System.String,System.String,System.String,System.String,System.String,System.Nullable{System.Decimal},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean,System.Threading.CancellationToken)">
             <summary>
@@ -858,6 +1072,45 @@
             <param name="cancellationToken"></param>
             <exception cref="T:Blip.HttpClient.Exceptions.BlipHttpClientException">Failure sending message to distribution list</exception>
             <exception cref="T:System.Exception">Unknown error</exception>
+        </member>
+        <member name="T:Blip.HttpClient.Services.IBlipHttpClient">
+            <summary>
+            BLiP Client that uses Http calls
+            </summary>
+        </member>
+        <member name="P:Blip.HttpClient.Services.IBlipHttpClient.Authorization">
+            <summary>
+            Authorization key
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IBlipHttpClient.ProcessCommandAsync(Lime.Protocol.Command,System.Threading.CancellationToken)">
+            <summary>
+            Processes a Lime <paramref name="requestCommand"/> and returns a command response
+            </summary>
+            <param name="requestCommand"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IBlipHttpClient.SendCommandAsync(Lime.Protocol.Command,System.Threading.CancellationToken)">
+            <summary>
+            Sends a lime <paramref name="command"/> without awaiting for a response
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IBlipHttpClient.SendMessageAsync(Lime.Protocol.Message,System.Threading.CancellationToken)">
+            <summary>
+            Sends a Lime Message
+            </summary>
+            <param name="message"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Blip.HttpClient.Services.IBlipHttpClient.SendNotificationAsync(Lime.Protocol.Notification,System.Threading.CancellationToken)">
+            <summary>
+            Sends a notification
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:Blip.HttpClient.Services.Resources.ResourceService">
             <summary>
