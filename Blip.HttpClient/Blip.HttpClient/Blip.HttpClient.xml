@@ -156,6 +156,16 @@
             <param name="analysisRequest"></param>
             <param name="cancellationToken"></param>
         </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.AnalyzeAsync(Takenet.Iris.Messaging.Resources.ArtificialIntelligence.AnalysisRequest,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Runs an analysis on a given request using the preferred AI Engine.
+            Adds logging funcionality.
+            </summary>
+            <returns>AI Engine response</returns>
+            <param name="analysisRequest"></param>
+            <param name="logger">Logger.</param>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
         <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.ArtificialIntelligenceService.GetAnswerAsync(System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             Gets the answer with the given <paramref name="answerId"/> for the requested <paramref name="intentionId"/>
@@ -291,6 +301,21 @@
             <summary>
             Trains the currently published model on the bot
             </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="T:Blip.HttpClient.Services.ArtificialIntelligence.IArtificialIntelligenceService">
+            <summary>
+            Overload interface for the already existant <c>IArtificalIntelligenceExtension</c> to add logs
+            </summary>
+        </member>
+        <member name="M:Blip.HttpClient.Services.ArtificialIntelligence.IArtificialIntelligenceService.AnalyzeAsync(Takenet.Iris.Messaging.Resources.ArtificialIntelligence.AnalysisRequest,Serilog.ILogger,System.Threading.CancellationToken)">
+            <summary>
+            Runs an analysis on a given request using the preferred AI Engine.
+            Adds logging funcionality.
+            </summary>
+            <returns>AI Engine response</returns>
+            <param name="analysisRequest"></param>
+            <param name="logger">Logger.</param>
             <param name="cancellationToken">Cancellation token.</param>
         </member>
         <member name="T:Blip.HttpClient.Services.BlipHttpClient">

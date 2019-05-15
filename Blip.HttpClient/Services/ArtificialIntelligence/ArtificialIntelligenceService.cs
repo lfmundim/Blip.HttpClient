@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Blip.HttpClient.Exceptions;
+using Blip.HttpClient.Factories;
 using Lime.Protocol;
+using Serilog;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions.ArtificialIntelligence;
 using Takenet.Iris.Messaging.Resources.ArtificialIntelligence;
@@ -29,6 +32,13 @@ namespace Blip.HttpClient.Services.ArtificialIntelligence
             _aiExtension = new ArtificialIntelligenceExtension(_sender);
         }
 
+        public ArtificialIntelligenceService(string authKey)
+        {
+            var factory = new BlipHttpClientFactory();
+            _sender = factory.BuildBlipHttpClient(authKey);
+            _aiExtension = new ArtificialIntelligenceExtension(_sender);
+        }
+
         /// <summary>
         /// Runs an analysis on a given request using the preferred AI Engine
         /// </summary>
@@ -38,6 +48,45 @@ namespace Blip.HttpClient.Services.ArtificialIntelligence
         public async Task<AnalysisResponse> AnalyzeAsync(AnalysisRequest analysisRequest, CancellationToken cancellationToken = default)
         {
             return await _aiExtension.AnalyzeAsync(analysisRequest, cancellationToken);
+        }
+
+
+        /// <summary>
+        /// Runs an analysis on a given request using the preferred AI Engine.
+        /// Adds logging funcionality.
+        /// </summary>
+        /// <returns>AI Engine response</returns>
+        /// <param name="analysisRequest"></param>
+        /// <param name="logger">Logger.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        public async Task<AnalysisResponse> AnalyzeAsync(AnalysisRequest analysisRequest, ILogger logger, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                logger.Information("[Analyze] Trying to get analyze {@analysisRequest}", analysisRequest);
+                var command = new Command()
+                {
+                    Method = CommandMethod.Set,
+                    Uri = new LimeUri($"/analysis"),
+                    To = "postmaster@ai.msging.net",
+                    Resource = analysisRequest
+                };
+
+                var analysisResponse = await _sender.ProcessCommandAsync(command, cancellationToken);
+                if (analysisResponse.Status != CommandStatus.Success)
+                {
+                    throw new BlipHttpClientException("Failed to get analyze the request", analysisResponse);
+                }
+                logger.Information("[Analyze] Successfully analyzed {@analysisRequest}: {@analysisResponse}", 
+                                   analysisRequest, analysisResponse.Resource as AnalysisResponse);
+
+                return analysisResponse.Resource as AnalysisResponse;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "[Analyze] Failed to analyze {@analysisRequest}", analysisRequest);
+                throw;
+            }
         }
 
         /// <summary>
