@@ -1,5 +1,6 @@
 # Blip.HttpClient [![Build status](https://ci.appveyor.com/api/projects/status/xg52i4obk27h92g9/branch/master?svg=true)](https://ci.appveyor.com/project/lfmundim/blip-httpclient/branch/master) [![codecov](https://codecov.io/gh/lfmundim/Blip.HttpClient/branch/master/graph/badge.svg)](https://codecov.io/gh/lfmundim/Blip.HttpClient) [![Nuget](https://buildstats.info/nuget/Blip.HttpClient)](https://www.nuget.org/packages/blip.httpclient)
-Take.BLiP.Client implementation to use Http calls instead of a TCP client.
+DEPRECATED: Take.BLiP.Client implementation to use Http calls instead of a TCP client.
+**Disclaimer: This package is built in a way that you CAN in fact use BLiP's TCP client for anything. It will be discontinued in the near future and replaced by a TBA package (it will be informed here)**
 
 Full documentation of supported methods can be found [here](https://docs.blip.ai), to be sent using the `ProcessCommandAsync`, `SendMessageAsync` and `SendNotificationAsync` by building the `Command` using the given Http Structure.
 
