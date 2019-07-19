@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Blip.HttpClient.Factories;
+using Blip.HttpClient.Models;
 using Lime.Protocol;
 using Microsoft.Extensions.DependencyInjection;
 using Take.Blip.Client.Extensions.ArtificialIntelligence;
@@ -30,24 +31,24 @@ namespace Blip.HttpClient.Extensions
         /// <returns></returns>
         public static IServiceCollection RegisterBlipExtensions(this IServiceCollection services)
         {
-            services.AddSingleton<IBucketExtension, BucketExtension>();
-            services.AddSingleton<IDirectoryExtension, DirectoryExtension>();
-            services.AddSingleton<IContactExtension, ContactExtension>();
-            services.AddSingleton<IResourceExtension, ResourceExtension>();
-            services.AddSingleton<IArtificialIntelligenceExtension, ArtificialIntelligenceExtension>();
-            services.AddSingleton<IEventTrackExtension, EventTrackExtension>();
-            services.AddSingleton<IBroadcastExtension, BroadcastExtension>();
-            services.AddSingleton<IDelegationExtension, DelegationExtension>();
-            services.AddSingleton<IDirectoryExtension, DirectoryExtension>();
-            services.AddSingleton<IBucketExtension, BucketExtension>();
-            services.AddSingleton<ISchedulerExtension, SchedulerExtension>();
-            services.AddSingleton<IArtificialIntelligenceExtension, ArtificialIntelligenceExtension>();
-            services.AddSingleton<IProfileExtension, ProfileExtension>();
-            services.AddSingleton<IEventTrackExtension, EventTrackExtension>();
-            services.AddSingleton<IHelpDeskExtension, HelpDeskExtension>();
-            services.AddSingleton<IThreadExtension, ThreadExtension>();
-            services.AddSingleton<IResourceExtension, ResourceExtension>();
-            services.AddSingleton<ITunnelExtension, TunnelExtension>();
+            services.AddSingleton<IBucketExtension, BucketExtension>()
+                    .AddSingleton<IDirectoryExtension, DirectoryExtension>()
+                    .AddSingleton<IContactExtension, ContactExtension>()
+                    .AddSingleton<IResourceExtension, ResourceExtension>()
+                    .AddSingleton<IArtificialIntelligenceExtension, ArtificialIntelligenceExtension>()
+                    .AddSingleton<IEventTrackExtension, EventTrackExtension>()
+                    .AddSingleton<IBroadcastExtension, BroadcastExtension>()
+                    .AddSingleton<IDelegationExtension, DelegationExtension>()
+                    .AddSingleton<IDirectoryExtension, DirectoryExtension>()
+                    .AddSingleton<IBucketExtension, BucketExtension>()
+                    .AddSingleton<ISchedulerExtension, SchedulerExtension>()
+                    .AddSingleton<IArtificialIntelligenceExtension, ArtificialIntelligenceExtension>()
+                    .AddSingleton<IProfileExtension, ProfileExtension>()
+                    .AddSingleton<IEventTrackExtension, EventTrackExtension>()
+                    .AddSingleton<IHelpDeskExtension, HelpDeskExtension>()
+                    .AddSingleton<IThreadExtension, ThreadExtension>()
+                    .AddSingleton<IResourceExtension, ResourceExtension>()
+                    .AddSingleton<ITunnelExtension, TunnelExtension>();
 
             return services;
         }
@@ -58,12 +59,11 @@ namespace Blip.HttpClient.Extensions
         /// <param name="services"></param>
         /// <param name="authKey"></param>
         /// <param name="documentList"></param>
-        /// <returns></returns>
+        /// <param name="protocol">Defaults to Http to avoid breaking changes</param>
         public static IServiceCollection DefaultRegister(this IServiceCollection services, string authKey,
-            List<Document> documentList = null)
+                                                         List<Document> documentList = null, BlipProtocol protocol = BlipProtocol.Http)
         {
-            var factory = new BlipHttpClientFactory();
-            return factory.BuildServiceCollection(authKey, documentList, services);
+            return new BlipClientFactory().BuildServiceCollection(authKey, protocol, documentList, services);
         }
     }
 }

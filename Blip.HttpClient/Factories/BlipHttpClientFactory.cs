@@ -5,6 +5,7 @@ using Lime.Protocol.Serialization;
 using Lime.Protocol.Serialization.Newtonsoft;
 using Microsoft.Extensions.DependencyInjection;
 using RestEase;
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Take.Blip.Client;
@@ -15,6 +16,7 @@ namespace Blip.HttpClient.Factories
     /// <summary>
     /// Factory that allows the creation of a BlipClient that uses Http
     /// </summary>
+    [Obsolete("Obsolete as of version 2.5. This will be REMOVED on version 3.0, in favour of BlipClientFactory")]
     public class BlipHttpClientFactory
     {
         /// <summary>
