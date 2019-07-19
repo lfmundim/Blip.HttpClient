@@ -4,12 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Lucas Mundim, Andre Minelli, Matheus Rosa</Authors>
     <Company>Lucas Mundim</Company>
-    <Description>Take.BLiP.Client implementation to use Http calls instead of TCP</Description>
+    <Description>BLiP Extensions' extensions to include logs, including a TCP/HTTP ISender factory</Description>
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>2.3.0</Version>
-    <PackageReleaseNotes>Implementation of IEventTrackService; Resolved Issue #2</PackageReleaseNotes>
+    <Version>2.5.0</Version>
+    <PackageReleaseNotes>Add deprecated note on BlipHttpClientFactory and create the replacement BlipClientFactory</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
