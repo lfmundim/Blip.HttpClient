@@ -57,12 +57,12 @@ namespace Blip.HttpClient.Factories
         /// </summary>
         /// <param name="authKey"></param>
         /// <param name="protocol"></param>
-        public ISender BuildBlipClient(string authKey, BlipProtocol protocol)
+        public ISender BuildBlipClient(string authKey, BlipProtocol protocol, List<Document> documents = null)
         {
             switch (protocol)
             {
                 case BlipProtocol.Http:
-                    return BuildHttpClient(authKey);
+                    return BuildHttpClient(authKey, documents);
                 case BlipProtocol.Tcp:
                 default:
                     return BuildTcpClient(authKey);
@@ -77,14 +77,23 @@ namespace Blip.HttpClient.Factories
                                           .Build();
         }
 
-        private ISender BuildHttpClient(string authKey)
+        private ISender BuildHttpClient(string authKey, List<Document> documents = null)
         {
             if (authKey.StartsWith(KEY_PREFIX))
             {
                 authKey = authKey.Replace(KEY_PREFIX, string.Empty).Trim();
             }
 
-            var client = new RestClient(MSGING_BASE_URL).For<IBlipHttpClient>();
+            var documentResolver = new DocumentTypeResolver();
+            documentResolver.WithBlipDocuments();
+
+            documents?.ForEach(d => documentResolver.RegisterDocument(d.GetType()));
+
+            var envelopeSerializer = new EnvelopeSerializer(documentResolver);
+
+            var client = new RestClient(MSGING_BASE_URL) {
+                JsonSerializerSettings = envelopeSerializer.Settings
+            }.For<IBlipHttpClient>();
 
             client.Authorization = new AuthenticationHeaderValue(KEY_PREFIX, authKey);
             return new BlipHttpClient(client);
