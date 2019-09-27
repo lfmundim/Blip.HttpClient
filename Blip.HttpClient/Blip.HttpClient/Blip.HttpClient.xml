@@ -106,7 +106,7 @@
             <param name="documents"></param>
             <param name="serviceCollection"></param>
         </member>
-        <member name="M:Blip.HttpClient.Factories.BlipClientFactory.BuildBlipClient(System.String,Blip.HttpClient.Models.BlipProtocol)">
+        <member name="M:Blip.HttpClient.Factories.BlipClientFactory.BuildBlipClient(System.String,Blip.HttpClient.Models.BlipProtocol,System.Collections.Generic.List{Lime.Protocol.Document})">
             <summary>
             Builds an ISender using the given auth key for the given protocol
             </summary>
