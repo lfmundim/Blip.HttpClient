@@ -57,6 +57,7 @@ namespace Blip.HttpClient.Factories
         /// </summary>
         /// <param name="authKey"></param>
         /// <param name="protocol"></param>
+        /// <param name="documents"></param>
         public ISender BuildBlipClient(string authKey, BlipProtocol protocol, List<Document> documents = null)
         {
             switch (protocol)
