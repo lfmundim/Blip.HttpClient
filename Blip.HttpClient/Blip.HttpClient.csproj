@@ -8,8 +8,8 @@
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>2.5.0</Version>
-    <PackageReleaseNotes>Add deprecated note on BlipHttpClientFactory and create the replacement BlipClientFactory</PackageReleaseNotes>
+    <Version>2.5.2</Version>
+    <PackageReleaseNotes>Hotfix on BLiP Serialization</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
