@@ -20,8 +20,8 @@ namespace Blip.HttpClient.Tests
             var documentList = new List<Document>();
             documentList.Add(new UserContext());
             var services = new ServiceCollection();
-            //pagseguro hmg
-            services.DefaultRegister("Key cGFnc2VndXJvYXRlbmRpbWVudG9obWc6TzVhSURNUURBSVhuT05rTVdORE4=", documentList,domain: "pagseguro.msging.net");
+            //papagaio
+            services.DefaultRegister("Key cGFwYWdhaW86aXYyblowYVRGRFhMb0lkSHVMSTg=", documentList,domain: "pagseguro.msging.net");
             var provider = services.BuildServiceProvider();
             _client = provider.GetService<ISender>();
         }
