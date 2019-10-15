@@ -82,7 +82,6 @@ namespace Blip.HttpClient.Factories
             return new BlipClientBuilder().UsingAuthorizationKey(authKey)
                                           .UsingRoutingRule(RoutingRule.Instance)
                                           .WithChannelCount(2)
-                                          .UsingDomain(_domain)
                                           .UsingHostName(_domain)
                                           .Build();
         }
