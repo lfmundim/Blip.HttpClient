@@ -113,6 +113,7 @@
             </summary>
             <param name="authKey"></param>
             <param name="protocol"></param>
+            <param name="documents"></param>
         </member>
         <member name="T:Blip.HttpClient.Factories.BlipHttpClientFactory">
             <summary>
