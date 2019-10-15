@@ -1,4 +1,4 @@
-﻿using Blip.HttpClient.Extensions;
+using Blip.HttpClient.Extensions;
 using Blip.HttpClient.Models;
 using Blip.HttpClient.Services;
 using Lime.Messaging.Resources;
@@ -23,8 +23,16 @@ namespace Blip.HttpClient.Factories
     public class BlipClientFactory
     {
         private const string KEY_PREFIX = "Key";
-        private const string MSGING_BASE_URL = "https://msging.net/";
+        private const string DEFAULT_BASE_DOMAIN = "msging.net";
 
+        private readonly string _domain;
+        private string MSGING_BASE_URL(string domain = DEFAULT_BASE_DOMAIN) => $"https://{domain}/";
+
+        public BlipClientFactory(string domain = DEFAULT_BASE_DOMAIN)
+        {
+            _domain = string.IsNullOrWhiteSpace(domain) ? DEFAULT_BASE_DOMAIN : domain;
+        }
+      
         /// <summary>
         /// Creates or updates a Service Collection to include BLiP's extensions and any custom Documents, including an <c>ISender</c>
         /// </summary>
@@ -79,12 +87,13 @@ namespace Blip.HttpClient.Factories
                                         .UsingAuthorizationKey(authKey)
                                         .UsingRoutingRule(RoutingRule.Instance)
                                         .WithChannelCount(2)
+                                        .UsingHostName(_domain)
                                         .Build();
         }
 
         private ISender BuildHttpClient(string authKey, EnvelopeSerializer envelopeSerializer)
         {
-            var client = new RestClient(MSGING_BASE_URL) {
+            var client = new RestClient(MSGING_BASE_URL(_domain)) {
                 JsonSerializerSettings = envelopeSerializer.Settings
             }.For<IBlipHttpClient>();
 

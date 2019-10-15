@@ -83,7 +83,7 @@
             <param name="services"></param>
             <returns></returns>
         </member>
-        <member name="M:Blip.HttpClient.Extensions.ServiceCollectionExtensions.DefaultRegister(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Collections.Generic.List{Lime.Protocol.Document},Blip.HttpClient.Models.BlipProtocol)">
+        <member name="M:Blip.HttpClient.Extensions.ServiceCollectionExtensions.DefaultRegister(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Collections.Generic.List{Lime.Protocol.Document},Blip.HttpClient.Models.BlipProtocol,System.String)">
             <summary>
             Updates the ServiceCollection with any custom documents and BLiP's extensions
             </summary>
@@ -91,6 +91,7 @@
             <param name="authKey"></param>
             <param name="documentList"></param>
             <param name="protocol">Defaults to Http to avoid breaking changes</param>
+            <param name="domain">Domain of request in blip. Default is 'msging.net'</param>
         </member>
         <member name="T:Blip.HttpClient.Factories.BlipClientFactory">
             <summary>

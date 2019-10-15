@@ -60,10 +60,11 @@ namespace Blip.HttpClient.Extensions
         /// <param name="authKey"></param>
         /// <param name="documentList"></param>
         /// <param name="protocol">Defaults to Http to avoid breaking changes</param>
+        /// <param name="domain">Domain of request in blip. Default is 'msging.net'</param>
         public static IServiceCollection DefaultRegister(this IServiceCollection services, string authKey,
-                                                         List<Document> documentList = null, BlipProtocol protocol = BlipProtocol.Http)
+                                                         List<Document> documentList = null, BlipProtocol protocol = BlipProtocol.Http, string domain = null)
         {
-            return new BlipClientFactory().BuildServiceCollection(authKey, protocol, documentList, services);
+            return new BlipClientFactory(domain).BuildServiceCollection(authKey, protocol, documentList, services);
         }
     }
 }
