@@ -7,6 +7,7 @@ using Lime.Protocol.Serialization;
 using Lime.Protocol.Serialization.Newtonsoft;
 using Microsoft.Extensions.DependencyInjection;
 using RestEase;
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Take.Blip.Client;
@@ -20,16 +21,16 @@ namespace Blip.HttpClient.Factories
     public class BlipClientFactory
     {
         private const string KEY_PREFIX = "Key";
-        private const string DEFAULT_BASE_DOMAIN = "msging.net";
-        private const string HTTP_DOMAIN_PREFIX = "http.";
-        private const string TCP_DOMAIN_PREFIX = "tcp.";
-
+        private const string OLD_DOMAIN = "msging.net";
+        private const string NEW_TCP_DOMAIN = "tcp.msging.net";
+        private const string NEW_HTTP_DOMAIN = "http.msging.net";
+        
         private readonly string _domain;
-        private string MSGING_BASE_URL(string domain = DEFAULT_BASE_DOMAIN) => $"https://{domain}/";
+        private string MSGING_BASE_URL(string domain = OLD_DOMAIN) => $"https://{domain}/";
 
-        public BlipClientFactory(string domain = DEFAULT_BASE_DOMAIN)
+        public BlipClientFactory(string domain = NEW_HTTP_DOMAIN)
         {
-            _domain = domain.IsNullOrWhiteSpace() ? DEFAULT_BASE_DOMAIN : domain;
+            _domain = domain.IsNullOrWhiteSpace() ? NEW_HTTP_DOMAIN : domain;
         }
       
         /// <summary>
@@ -82,8 +83,8 @@ namespace Blip.HttpClient.Factories
 
         private ISender BuildTcpClient(string authKey, EnvelopeSerializer envelopeSerializer = default)
         {
-            var domain = _domain.Equals(DEFAULT_BASE_DOMAIN)
-                       ? TCP_DOMAIN_PREFIX + _domain
+            var domain = _domain.Equals(OLD_DOMAIN)
+                       ? NEW_TCP_DOMAIN
                        : _domain;
 
             return new BlipClientBuilder(new TcpTransportFactory(envelopeSerializer))
@@ -96,8 +97,8 @@ namespace Blip.HttpClient.Factories
 
         private ISender BuildHttpClient(string authKey, EnvelopeSerializer envelopeSerializer)
         {
-            var domain = _domain.Equals(DEFAULT_BASE_DOMAIN)
-                       ? HTTP_DOMAIN_PREFIX + _domain
+            var domain = _domain.Equals(OLD_DOMAIN)
+                       ? NEW_HTTP_DOMAIN
                        : _domain;
 
             var client = new RestClient(MSGING_BASE_URL(domain)) {
