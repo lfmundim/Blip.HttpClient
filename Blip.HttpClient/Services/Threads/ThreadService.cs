@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Blip.HttpClient.Factories;
 using Take.Blip.Client;
 using Takenet.Iris.Messaging.Resources;
+using Blip.HttpClient.Models;
 
 namespace Blip.HttpClient.Services.Threads
 {
@@ -32,10 +33,11 @@ namespace Blip.HttpClient.Services.Threads
         /// Creates a ThreadService instance using a given authKey.
         /// </summary>
         /// <param name="authKey">Bot authorization key</param>
-        public ThreadService(string authKey)
+        /// <param name="blipProtocol">Protocol to be used</param>
+        public ThreadService(string authKey, BlipProtocol blipProtocol = BlipProtocol.Tcp)
         {
-            var factory = new BlipHttpClientFactory();
-            _sender = factory.BuildBlipHttpClient(authKey);
+            var factory = new BlipClientFactory();
+            _sender = factory.BuildBlipClient(authKey, blipProtocol);
         }
 
         /// <summary>

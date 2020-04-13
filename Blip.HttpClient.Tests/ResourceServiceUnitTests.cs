@@ -21,8 +21,8 @@ namespace Blip.HttpClient.Tests
         public readonly ILogger _logger;
         public ResourceServiceUnitTests()
         {
-            var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var clientFactory = new BlipClientFactory();
+            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Http);
             _resourceService = new ResourceService(sender);
             _logger = Substitute.For<ILogger>();
         }

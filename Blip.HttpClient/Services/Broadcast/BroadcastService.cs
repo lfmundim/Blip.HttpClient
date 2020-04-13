@@ -32,10 +32,11 @@ namespace Blip.HttpClient.Services.Broadcast
         /// Creates a BroadcastService instance using a given authKey.
         /// </summary>
         /// <param name="authKey">Bot authorization key</param>
-        public BroadcastService(string authKey)
+        /// <param name="protocol">Protocol to be used</param>
+        public BroadcastService(string authKey, BlipProtocol protocol = BlipProtocol.Tcp)
         {
-            var factory = new BlipHttpClientFactory();
-            _sender = factory.BuildBlipHttpClient(authKey);
+            var factory = new BlipClientFactory();
+            _sender = factory.BuildBlipClient(authKey, protocol);
         }
 
         /// <summary>

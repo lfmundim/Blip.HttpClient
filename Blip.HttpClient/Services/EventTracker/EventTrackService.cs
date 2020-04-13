@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
+using Blip.HttpClient.Models;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
 using Serilog;
@@ -36,10 +37,11 @@ namespace Blip.HttpClient.Services.EventTracker
         /// Creates a EventTrackService instance using a given authKey.
         /// </summary>
         /// <param name="authKey">Bot authorization key</param>
-        public EventTrackService(string authKey)
+        /// <param name="blipProtocol">Protocol to be used</param>
+        public EventTrackService(string authKey, BlipProtocol blipProtocol = BlipProtocol.Tcp)
         {
-            var factory = new BlipHttpClientFactory();
-            _sender = factory.BuildBlipHttpClient(authKey);
+            var factory = new BlipClientFactory();
+            _sender = factory.BuildBlipClient(authKey, blipProtocol);
         }
 
         /// <summary>

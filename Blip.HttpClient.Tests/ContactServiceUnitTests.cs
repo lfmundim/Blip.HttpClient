@@ -1,6 +1,6 @@
 ﻿using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
-using Blip.HttpClient.Services;
+using Blip.HttpClient.Services.Contacts;
 using Lime.Messaging.Resources;
 using Lime.Protocol;
 using NSubstitute;
@@ -10,7 +10,6 @@ using Shouldly;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Blip.HttpClient.Services.Contacts;
 using Take.Blip.Client;
 using Xunit;
 
@@ -22,8 +21,8 @@ namespace Blip.HttpClient.Tests
         private readonly ILogger _logger;
         public ContactServiceUnitTests()
         {
-            var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var clientFactory = new BlipClientFactory();
+            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Http);
             _contactService = new ContactService(sender);
             _logger = Substitute.For<ILogger>();
         }

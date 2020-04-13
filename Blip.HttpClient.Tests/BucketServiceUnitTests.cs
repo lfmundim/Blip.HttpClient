@@ -25,8 +25,8 @@ namespace Blip.HttpClient.Tests
 
         public BucketServiceUnitTests()
         {
-            var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var clientFactory = new BlipClientFactory();
+            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Http);
             _bucketService = new BucketService(sender);
             _logger = Substitute.For<ILogger>();
         }

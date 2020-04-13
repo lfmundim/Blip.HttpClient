@@ -1,5 +1,6 @@
 ﻿using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
+using Blip.HttpClient.Models;
 using Lime.Protocol;
 using Serilog;
 using System;
@@ -30,10 +31,11 @@ namespace Blip.HttpClient.Services.Bucket
         /// Creates a BucketService instance using a given authKey.
         /// </summary>
         /// <param name="authKey">Bot authorization key</param>
-        public BucketService(string authKey)
+        /// <param name="protocol">Protocol to be used</param>
+        public BucketService(string authKey, BlipProtocol blipProtocol = BlipProtocol.Tcp)
         {
-            var factory = new BlipHttpClientFactory();
-            _sender = factory.BuildBlipHttpClient(authKey);
+            var factory = new BlipClientFactory();
+            _sender = factory.BuildBlipClient(authKey, blipProtocol);
         }
 
         /// <summary>

@@ -26,8 +26,8 @@ namespace Blip.HttpClient.Tests
 
         public BroadcastServiceUnitTests()
         {
-            var clientFactory = new BlipHttpClientFactory();
-            var sender = clientFactory.BuildBlipHttpClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=");
+            var clientFactory = new BlipClientFactory();
+            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Http);
             _broadcastService = new BroadcastService(sender);
             _logger = Substitute.For<ILogger>();
         }

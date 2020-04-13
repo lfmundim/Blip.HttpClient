@@ -115,35 +115,6 @@
             <param name="protocol"></param>
             <param name="documents"></param>
         </member>
-        <member name="T:Blip.HttpClient.Factories.BlipHttpClientFactory">
-            <summary>
-            Factory that allows the creation of a BlipClient that uses Http
-            </summary>
-        </member>
-        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildServiceCollection(System.String,System.Collections.Generic.List{Lime.Protocol.Document},Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Creates or updates a Service Collection to include BLiP's extensions and any custom Documents
-            </summary>
-            <param name="authKey"></param>
-            <param name="documents"></param>
-            <param name="serviceCollection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String,Lime.Protocol.Serialization.IDocumentTypeResolver)">
-            <summary>
-            Builds an ISender using the given auth key and custom documents previously set
-            </summary>
-            <param name="authKey"></param>
-            <param name="documentTypeResolver"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Blip.HttpClient.Factories.BlipHttpClientFactory.BuildBlipHttpClient(System.String)">
-            <summary>
-            Builds an ISender using the given auth key
-            </summary>
-            <param name="authKey"></param>
-            <returns></returns>
-        </member>
         <member name="T:Blip.HttpClient.Models.BlipProtocol">
             <summary>
             Supported protocols for BLiP's <c>ISender</c>
@@ -234,11 +205,12 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             Creates a BroadcastService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
+            <param name="protocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.Broadcast.BroadcastService.AddRecipientAsync(System.String,Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
@@ -478,11 +450,12 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Bucket.BucketService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             Creates a BucketService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
+            <param name="protocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.Bucket.BucketService.GetAsync``1(System.String,System.Threading.CancellationToken)">
             <summary>
@@ -611,11 +584,12 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Contacts.ContactService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             Creates a ContactService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
+            <param name="blipProtocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.Contacts.ContactService.DeleteAsync(Lime.Protocol.Identity,System.Threading.CancellationToken)">
             <summary>
@@ -781,11 +755,12 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             Creates a EventTrackService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
+            <param name="blipProtocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.EventTracker.EventTrackService.AddAsync(System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Threading.CancellationToken,Lime.Protocol.Identity)">
             <summary>
@@ -1010,11 +985,12 @@
             </summary>
             <param name="sender"></param>
         </member>
-        <member name="M:Blip.HttpClient.Services.Resources.ResourceService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Resources.ResourceService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             ResourceService builder using a given <paramref name="authKey"/> to instantiate the sender on demand
             </summary>
             <param name="authKey"></param>
+            <param name="blipProtocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.Resources.ResourceService.DeleteAsync(System.String,System.Threading.CancellationToken)">
             <summary>
@@ -1141,11 +1117,12 @@
             </summary>
             <param name="sender">ISender instance, from BlipHttpClientFactory</param>
         </member>
-        <member name="M:Blip.HttpClient.Services.Threads.ThreadService.#ctor(System.String)">
+        <member name="M:Blip.HttpClient.Services.Threads.ThreadService.#ctor(System.String,Blip.HttpClient.Models.BlipProtocol)">
             <summary>
             Creates a ThreadService instance using a given authKey.
             </summary>
             <param name="authKey">Bot authorization key</param>
+            <param name="blipProtocol">Protocol to be used</param>
         </member>
         <member name="M:Blip.HttpClient.Services.Threads.ThreadService.GetHistoryAsync(Lime.Protocol.Identity,Blip.HttpClient.Services.Threads.Enumerations.ChatOrder,Serilog.ILogger,System.Threading.CancellationToken,System.DateTime)">
             <summary>

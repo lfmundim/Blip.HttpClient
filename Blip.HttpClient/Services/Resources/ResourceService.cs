@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
+using Blip.HttpClient.Models;
 using Lime.Protocol;
 using Serilog;
 using Take.Blip.Client;
@@ -34,10 +35,11 @@ namespace Blip.HttpClient.Services.Resources
         /// ResourceService builder using a given <paramref name="authKey"/> to instantiate the sender on demand
         /// </summary>
         /// <param name="authKey"></param>
-        public ResourceService(string authKey)
+        /// <param name="blipProtocol">Protocol to be used</param>
+        public ResourceService(string authKey, BlipProtocol blipProtocol = BlipProtocol.Tcp)
         {
-            var factory = new BlipHttpClientFactory();
-            _sender = factory.BuildBlipHttpClient(authKey);
+            var factory = new BlipClientFactory();
+            _sender = factory.BuildBlipClient(authKey, blipProtocol);
         }
 
         /// <summary>
