@@ -8,8 +8,8 @@
     <RepositoryUrl>https://github.com/lfmundim/Blip.HttpClient</RepositoryUrl>
     <PackageTags>blip, client, http, chatbot, take</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>2.6</Version>
-    <PackageReleaseNotes>Include external domain option</PackageReleaseNotes>
+    <Version>3.0</Version>
+    <PackageReleaseNotes>Remove deprecated Factory; Add TCP and HTTP prefixes as per new BLiP implementations</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
