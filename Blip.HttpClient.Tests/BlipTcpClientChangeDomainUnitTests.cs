@@ -23,7 +23,7 @@ namespace Blip.HttpClient.Tests
             //papagaio
             services.DefaultRegister("Key cGFwYWdhaW86aXYyblowYVRGRFhMb0lkSHVMSTg=", documentList, Models.BlipProtocol.Tcp, "pagseguro.msging.net");
             var provider = services.BuildServiceProvider();
-            //_client = provider.GetService<ISender>();
+            _client = provider.GetService<ISender>();
         }
 
         [Theory]

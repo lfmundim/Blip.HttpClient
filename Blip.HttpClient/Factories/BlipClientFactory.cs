@@ -24,6 +24,7 @@ namespace Blip.HttpClient.Factories
     {
         private const string KEY_PREFIX = "Key";
         private const string DEFAULT_BASE_DOMAIN = "msging.net";
+        private const string HTTP_DOMAIN_PREFIX = "http.";
 
         private readonly string _domain;
         private string MSGING_BASE_URL(string domain = DEFAULT_BASE_DOMAIN) => $"https://{domain}/";
@@ -93,7 +94,11 @@ namespace Blip.HttpClient.Factories
 
         private ISender BuildHttpClient(string authKey, EnvelopeSerializer envelopeSerializer)
         {
-            var client = new RestClient(MSGING_BASE_URL(_domain)) {
+            var domain = _domain.Equals(DEFAULT_BASE_DOMAIN)
+                       ? HTTP_DOMAIN_PREFIX + _domain
+                       : _domain;
+
+            var client = new RestClient(MSGING_BASE_URL(domain)) {
                 JsonSerializerSettings = envelopeSerializer.Settings
             }.For<IBlipHttpClient>();
 
