@@ -7,11 +7,8 @@ using Lime.Protocol.Serialization;
 using Lime.Protocol.Serialization.Newtonsoft;
 using Microsoft.Extensions.DependencyInjection;
 using RestEase;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions;
 
@@ -31,7 +28,7 @@ namespace Blip.HttpClient.Factories
 
         public BlipClientFactory(string domain = DEFAULT_BASE_DOMAIN)
         {
-            _domain = string.IsNullOrWhiteSpace(domain) ? DEFAULT_BASE_DOMAIN : domain;
+            _domain = domain.IsNullOrWhiteSpace() ? DEFAULT_BASE_DOMAIN : domain;
         }
       
         /// <summary>
