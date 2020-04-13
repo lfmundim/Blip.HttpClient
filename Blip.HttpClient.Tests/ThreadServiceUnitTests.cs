@@ -32,33 +32,6 @@ namespace Blip.HttpClient.Tests
             _logger = Substitute.For<ILogger>();
         }
 
-        #region Methods unit tests
-
-        [Theory]
-        [InlineData("")]
-        [InlineData("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=")]
-        public async Task Get_History_UnitTest(string authKey)
-        {
-            var identity = Identity.Parse(IdentityString);
-            IEnumerable<ThreadMessage> history;
-
-            if (authKey.Equals(""))
-            {
-                history = await _threadService.GetHistoryAsync(identity, Enumerations.ChatOrder.Asc, _logger, CancellationToken.None, DateTime.Parse("2018-12-06T10:16:50.088Z"));
-            }
-            else
-            {
-                var threadService = new ThreadService(authKey);
-                history = await threadService.GetHistoryAsync(identity, Enumerations.ChatOrder.Asc, _logger, CancellationToken.None, DateTime.Parse("2018-12-06T10:16:50.088Z"));
-            }
-
-            var historyList = history.ToList();
-            historyList.Count.ShouldBeGreaterThan(0);
-            historyList.OrderBy(h => h.Date).IsSameOrEqualTo(historyList);
-        }
-
-        #endregion
-
         #region Log unit tests
 
         [Fact]

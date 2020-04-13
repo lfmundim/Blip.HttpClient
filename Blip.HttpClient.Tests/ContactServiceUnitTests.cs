@@ -81,22 +81,6 @@ namespace Blip.HttpClient.Tests
 
             mergeResponse.Status.ShouldBe(CommandStatus.Success);
         }
-
-        [Fact]
-        public async Task DeleteContactUnitTest()
-        {
-            var identity = Identity.Parse("unittests.testingbots@0mn.io");
-
-            var contact = new Contact
-            {
-                Identity = identity
-            };
-            await _contactService.SetAsync(identity, contact, CancellationToken.None);
-
-            var deleteResponse = await _contactService.DeleteAsync(identity, CancellationToken.None, _logger);
-
-            deleteResponse.Status.ShouldBe(CommandStatus.Success);
-        }
         #endregion
 
         #region Log unit tests
