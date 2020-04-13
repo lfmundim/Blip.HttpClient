@@ -23,15 +23,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lime.Messaging" Version="0.8.53-beta" />
-    <PackageReference Include="Lime.Protocol" Version="0.8.53-beta" />
+    <PackageReference Include="Lime.Messaging" Version="0.8.111-beta" />
+    <PackageReference Include="Lime.Protocol" Version="0.8.111-beta" />
     <PackageReference Include="Lime.Protocol.Serialization" Version="0.7.278" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="RestEase" Version="1.4.7" />
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
-    <PackageReference Include="Take.Blip.Client" Version="0.5.176-beta" />
-    <PackageReference Include="Takenet.Iris.Messaging" Version="2.57.525" />
+    <PackageReference Include="Take.Blip.Client" Version="0.5.285" />
+    <PackageReference Include="Takenet.Iris.Messaging" Version="19.43.1297" />
   </ItemGroup>
 
 </Project>
