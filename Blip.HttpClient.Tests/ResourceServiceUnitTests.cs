@@ -22,7 +22,7 @@ namespace Blip.HttpClient.Tests
         public ResourceServiceUnitTests()
         {
             var clientFactory = new BlipClientFactory();
-            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Http);
+            var sender = clientFactory.BuildBlipClient("dGVzdGluZ2JvdHM6OU8zZEpWbHVaSWZNYmVnOWZaZzM=", Models.BlipProtocol.Tcp);
             _resourceService = new ResourceService(sender);
             _logger = Substitute.For<ILogger>();
         }
@@ -47,7 +47,7 @@ namespace Blip.HttpClient.Tests
                 }
                 else
                 {
-                    var resourceService = new ResourceService(authKey);
+                    var resourceService = new ResourceService(authKey, Models.BlipProtocol.Tcp);
                     setResponse = await resourceService.SetAsync("UnitTest", PlainText.Parse("ResourceUnitTest"), _logger, cancellationToken: cts.Token);
                     getResponse = await resourceService.GetAsync<PlainText>("UnitTest", _logger, cancellationToken: cts.Token);
                 }

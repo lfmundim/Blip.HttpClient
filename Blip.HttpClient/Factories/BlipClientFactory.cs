@@ -79,7 +79,7 @@ namespace Blip.HttpClient.Factories
             }
         }
 
-        private ISender BuildTcpClient(string authKey, EnvelopeSerializer envelopeSerializer)
+        private ISender BuildTcpClient(string authKey, EnvelopeSerializer envelopeSerializer = default)
         {
             return new BlipClientBuilder(new TcpTransportFactory(envelopeSerializer))
                                         .UsingAuthorizationKey(authKey)

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Blip.HttpClient.Exceptions;
+﻿using Blip.HttpClient.Exceptions;
 using Blip.HttpClient.Factories;
 using Blip.HttpClient.Models;
 using Lime.Protocol;
 using Serilog;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Take.Blip.Client;
 using Take.Blip.Client.Extensions.Resource;
-using Takenet.Iris.Messaging.Contents;
 
 namespace Blip.HttpClient.Services.Resources
 {
@@ -223,7 +218,7 @@ namespace Blip.HttpClient.Services.Resources
         /// <param name="expiration"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><c>Command</c> with BLiP's response</returns>
-        public async Task<Command> SetAsync<T>(string id, T document, ILogger logger, TimeSpan expiration = default(TimeSpan), CancellationToken cancellationToken = default(CancellationToken)) where T : Document
+        public async Task<Command> SetAsync<T>(string id, T document, ILogger logger, TimeSpan expiration = default, CancellationToken cancellationToken = default) where T : Document
         {
             try
             {
@@ -234,7 +229,7 @@ namespace Blip.HttpClient.Services.Resources
                     Resource = document
                 };
                 logger?.Information("[SetResource] Trying to set resource [{@document}] with id {@id}", document, id);
-                var resourceResponse = await _sender.ProcessCommandAsync(command, cancellationToken).ConfigureAwait(false);
+                var resourceResponse = await _sender.ProcessCommandAsync(command, cancellationToken);
                 if (resourceResponse.Status != CommandStatus.Success)
                 {
                     throw new BlipHttpClientException("Failed to set resource on BLiP", resourceResponse);
